@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 远程推送二维码对话框 — 毛玻璃暗色卡片 + 白底二维码 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,26 +10,37 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/shape_dialog_bg_main"
+        android:elevation="16dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="@dimen/vs_30">
+        android:padding="@dimen/spacing_28">
 
-        <ImageView
-            android:id="@+id/ivQRCode"
-            android:layout_width="@dimen/vs_240"
-            android:layout_height="@dimen/vs_240"
-            android:layout_gravity="center" />
+        <!-- 白底二维码卡片 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_dialog_rounded"
+            android:padding="@dimen/spacing_8">
+
+            <ImageView
+                android:id="@+id/ivQRCode"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tvAddress"
-            android:layout_width="@dimen/vs_340"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/vs_20"
+            android:layout_marginTop="@dimen/spacing_16"
             android:gravity="center"
-            android:lineSpacingMultiplier="1.5"
+            android:lineSpacingMultiplier="1.4"
             android:textAlignment="gravity"
-            android:textColor="@color/color_CC000000"
-            android:textSize="@dimen/ts_24"
-            tools:text="1111111111111111111111111111111111111111111111111111" />
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_sm"
+            tools:text="扫码或访问 http://192.168.1.100:9978 推送" />
     </LinearLayout>
 </FrameLayout>

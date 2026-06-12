@@ -17,6 +17,7 @@
     android:layout_height="@dimen/card_poster_height_lg"
     android:background="@drawable/focus_card"
     android:focusable="true"
+    android:stateListAnimator="@animator/focus_scale_card"
     android:padding="@dimen/focus_border_strong">
 
     <!-- 封面图（全面占满，centerCrop） -->

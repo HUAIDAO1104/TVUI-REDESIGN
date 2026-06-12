@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 详情页播放按钮 — 品牌橙主操作 (mm单位已修复) -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="@dimen/vs_20" />
-            <solid android:color="@color/color_FF5F00" />
-            <stroke android:width="2mm" android:color="@android:color/white" />
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/brand_primary" />
+            <stroke android:width="@dimen/focus_border" android:color="@color/focus_border" />
         </shape>
     </item>
-    <item android:state_focused="false">
+    <item>
         <shape>
-            <corners android:radius="@dimen/vs_20" />
-            <solid android:color="@color/color_FF5F00" />
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/brand_primary_dark" />
         </shape>
     </item>
 </selector>

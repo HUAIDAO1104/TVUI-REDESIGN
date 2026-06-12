@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 海报底部标题渐变蒙版 — 透明到深黑 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="270"
+        android:startColor="@color/glass_gradient_start"
+        android:endColor="@color/glass_gradient_end" />
     <corners
-        android:bottomLeftRadius="@dimen/vs_10"
-        android:bottomRightRadius="@dimen/vs_10" />
-    <solid android:color="@color/color_99000000" />
+        android:bottomLeftRadius="@dimen/radius_lg"
+        android:bottomRightRadius="@dimen/radius_lg" />
 </shape>

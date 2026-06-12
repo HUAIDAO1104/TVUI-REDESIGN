@@ -9,6 +9,7 @@
     android:layout_marginBottom="@dimen/spacing_4"
     android:background="@drawable/focus_glass_default"
     android:focusable="true"
+    android:stateListAnimator="@animator/focus_scale_subtle"
     android:focusableInTouchMode="false"
     android:orientation="horizontal">
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 播放页底部面板 — 深色毛玻璃顶部圆角 (mm单位已修复) -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners
-        android:topLeftRadius="10mm"
-        android:topRightRadius="10mm" />
-    <solid android:color="@color/color_6632364E" />
+        android:topLeftRadius="@dimen/radius_xl"
+        android:topRightRadius="@dimen/radius_xl" />
+    <solid android:color="@color/glass_dark" />
+    <stroke android:width="1dp" android:color="@color/stroke_glass" />
 </shape>

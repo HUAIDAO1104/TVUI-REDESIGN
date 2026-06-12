@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 设置左侧菜单 — 焦点毛玻璃胶囊 (mm单位已修复) -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="5mm" />
-            <stroke android:width="2mm" android:color="@android:color/white" />
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/glass_white_focus" />
+            <stroke android:width="@dimen/focus_border" android:color="@color/focus_border" />
         </shape>
     </item>
-    <item android:state_focused="false">
+    <item>
         <shape>
+            <corners android:radius="@dimen/radius_pill" />
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>

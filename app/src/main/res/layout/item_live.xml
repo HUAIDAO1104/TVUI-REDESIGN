@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/focus_glass_default"
     android:focusable="true"
+    android:stateListAnimator="@animator/focus_scale_subtle"
     android:focusableInTouchMode="true">
 
     <!-- 新增来源占位（默认隐藏） -->

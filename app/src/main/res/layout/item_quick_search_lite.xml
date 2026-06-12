@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/button_dialog_main"
+    android:stateListAnimator="@animator/focus_scale_subtle"
     android:focusable="true">
 
     <TextView
@@ -11,8 +12,11 @@
         android:layout_height="wrap_content"
         android:ellipsize="middle"
         android:gravity="center_vertical"
-        android:padding="@dimen/vs_10"
+        android:paddingLeft="@dimen/spacing_12"
+        android:paddingRight="@dimen/spacing_12"
+        android:paddingTop="@dimen/spacing_8"
+        android:paddingBottom="@dimen/spacing_8"
         android:singleLine="true"
-        android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/ts_20" />
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_md" />
 </FrameLayout>

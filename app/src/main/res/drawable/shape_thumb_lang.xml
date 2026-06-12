@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 海报角标 — 品牌橙圆角徽章 (mm单位已修复) -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/color_FFB800" />
-    <corners android:radius="5mm" />
+    <solid android:color="@color/brand_primary" />
+    <corners android:radius="@dimen/radius_sm" />
 </shape>

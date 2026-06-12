@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_user_focus"
     android:focusable="true"
+    android:stateListAnimator="@animator/focus_scale_card"
     android:padding="@dimen/vs_1">
 
     <FrameLayout

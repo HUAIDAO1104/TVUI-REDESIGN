@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 首页分类 Tab — 焦点白玻璃胶囊 (mm单位已修复) -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="20mm"/>
-            <solid android:color="@color/color_BD0CADE2"/>
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/glass_white_focus" />
+            <stroke android:width="@dimen/focus_border" android:color="@color/focus_border" />
         </shape>
     </item>
-    <item android:state_focused="false">
+    <item>
         <shape>
-            <corners android:radius="20mm"/>
-            <solid android:color="@android:color/transparent"/>
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@android:color/transparent" />
         </shape>
     </item>
 </selector>

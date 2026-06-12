@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 源站按钮 — 毛玻璃焦点 (mm单位已修复) -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="10mm" />
-            <solid android:color="@color/color_6CFFFFFF" />
-            <stroke android:width="2mm" android:color="@android:color/white" />
+            <corners android:radius="@dimen/radius_lg" />
+            <solid android:color="@color/glass_white_focus" />
+            <stroke android:width="@dimen/focus_border" android:color="@color/focus_border" />
         </shape>
     </item>
-    <item android:state_focused="false">
+    <item>
         <shape>
-            <corners android:radius="10mm" />
-            <solid android:color="@color/color_6CFFFFFF" />
+            <corners android:radius="@dimen/radius_lg" />
+            <solid android:color="@color/glass_white" />
         </shape>
     </item>
 </selector>

@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 圆形操作按钮 — 焦点白玻璃 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="true" android:state_pressed="true">
-        <shape>
-            <corners android:radius="@dimen/vs_30" />
-            <solid android:color="@color/color_BD0CADE2" />
-        </shape>
-    </item>
-    <item android:state_focused="false" android:state_pressed="true">
-        <shape>
-            <corners android:radius="@dimen/vs_30" />
-            <solid android:color="@color/color_BD0CADE2" />
-        </shape>
-    </item>
     <item android:state_focused="true">
         <shape>
-            <corners android:radius="@dimen/vs_30" />
-            <solid android:color="@color/color_BD0CADE2" />
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/glass_white_focus" />
+            <stroke android:width="@dimen/focus_border" android:color="@color/focus_border" />
         </shape>
     </item>
-    <item android:state_focused="false" android:state_pressed="false">
+    <item android:state_pressed="true">
         <shape>
-            <corners android:radius="@dimen/vs_30" />
+            <corners android:radius="@dimen/radius_pill" />
+            <solid android:color="@color/glass_white_focus" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="@dimen/radius_pill" />
             <solid android:color="@android:color/transparent" />
         </shape>
     </item>

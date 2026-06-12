@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 海报加载占位 — 深色毛玻璃 (mm单位已修复) -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="#36ffffff" />
-            <corners android:radius="10mm" />
+            <solid android:color="@color/bg_card" />
+            <corners android:radius="@dimen/radius_lg" />
         </shape>
     </item>
     <item>

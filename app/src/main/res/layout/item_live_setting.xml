@@ -10,6 +10,7 @@
     android:layout_gravity="center"
     android:background="@drawable/focus_glass_default"
     android:focusable="true"
+    android:stateListAnimator="@animator/focus_scale_subtle"
     android:focusableInTouchMode="false"
     android:orientation="horizontal">
 

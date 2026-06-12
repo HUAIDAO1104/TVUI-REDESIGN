@@ -3,10 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/vs_4_"
-    android:layout_marginRight="@dimen/vs_4_">
+    android:layout_marginRight="@dimen/vs_4_"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false" />
 </FrameLayout>

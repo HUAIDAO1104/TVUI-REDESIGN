@@ -13,28 +13,32 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="@drawable/button_dialog_main"
+        android:stateListAnimator="@animator/focus_scale_subtle"
         android:clickable="true"
         android:ellipsize="middle"
         android:focusable="true"
         android:gravity="center"
-        android:padding="@dimen/vs_10"
+        android:paddingLeft="@dimen/spacing_16"
+        android:paddingRight="@dimen/spacing_16"
+        android:paddingTop="@dimen/spacing_12"
+        android:paddingBottom="@dimen/spacing_12"
         android:singleLine="true"
         android:text="@{name}"
-        android:textColor="@color/color_FFFFFF"
-        android:textSize="@dimen/ts_26"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_md"
         tools:text="11111111111111" />
 
     <ImageView
         android:id="@+id/tvDel"
-        android:layout_width="@dimen/vs_50"
+        android:layout_width="@dimen/btn_height_md"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/vs_5"
-        android:layout_marginLeft="@dimen/vs_5"
+        android:layout_marginStart="@dimen/spacing_8"
+        android:layout_marginLeft="@dimen/spacing_8"
         android:background="@drawable/button_dialog_main"
+        android:stateListAnimator="@animator/focus_scale"
         android:clickable="true"
         android:focusable="true"
-        android:padding="@dimen/vs_10"
+        android:padding="@dimen/spacing_8"
         android:src="@drawable/icon_delete" />
 
 </LinearLayout>
-

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 卡片聚焦态 Drawable：白色发光描边 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_md" />
+            <solid android:color="@color/glass_white_focus" />
+            <stroke
+                android:width="@dimen/focus_border_strong"
+                android:color="@color/focus_border" />
+        </shape>
+    </item>
+    <item android:state_focused="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/radius_md" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</selector>

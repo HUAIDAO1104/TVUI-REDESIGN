@@ -1,44 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ============================================================
+         TVBox Netflix×Material Design 毛玻璃主题色彩系统
+         设计基调：极深黑底 + 毛玻璃半透明层 + 白色文字 + 品牌橙高亮
+    ============================================================ -->
+
+    <!-- ── 背景层次 ── -->
+    <!-- 最底层：纯黑屏幕背景 -->
+    <color name="bg_screen">#0A0A0F</color>
+    <!-- 内容面 -->
+    <color name="bg_surface">#12121A</color>
+    <!-- 略亮内容面 -->
+    <color name="bg_surface_elevated">#1C1C28</color>
+    <!-- 卡片背景 -->
+    <color name="bg_card">#1E1E2E</color>
+
+    <!-- ── 毛玻璃层（Glassmorphism）── -->
+    <!-- 主毛玻璃：深色半透明，用于面板/控制栏 -->
+    <color name="glass_dark">#CC0D0D18</color>
+    <!-- 中等毛玻璃：用于卡片信息条/侧边栏 -->
+    <color name="glass_medium">#B20D0D18</color>
+    <!-- 浅毛玻璃：用于 Tooltip/提示层 -->
+    <color name="glass_light">#801A1A2E</color>
+    <!-- 亮色毛玻璃：白色系，用于聚焦高亮 -->
+    <color name="glass_white">#20FFFFFF</color>
+    <!-- 强白色毛玻璃：聚焦态背景 -->
+    <color name="glass_white_focus">#30FFFFFF</color>
+    <!-- 卡片底部渐变蒙版起始色（完全透明） -->
+    <color name="glass_gradient_start">#00000000</color>
+    <!-- 卡片底部渐变蒙版结束色 -->
+    <color name="glass_gradient_end">#E6000000</color>
+    <!-- 顶部 Hero 渐变蒙版结束色 -->
+    <color name="glass_hero_overlay">#99000000</color>
+
+    <!-- ── 品牌色 ── -->
+    <!-- 主品牌色：Netflix 式橙红 -->
+    <color name="brand_primary">#E50914</color>
+    <!-- 品牌色深色态（聚焦/按下）-->
+    <color name="brand_primary_dark">#B20710</color>
+    <!-- 次要品牌色：信息蓝 -->
+    <color name="brand_accent">#0CADE2</color>
+    <!-- 次要品牌色深色态 -->
+    <color name="brand_accent_dark">#0990BD</color>
+
+    <!-- ── 文字颜色 ── -->
+    <!-- 主文字：纯白 -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <!-- 次要文字：略透明白 -->
+    <color name="text_secondary">#CCF0F0F5</color>
+    <!-- 三级文字 -->
+    <color name="text_tertiary">#99CACAD5</color>
+    <!-- 禁用/提示文字 -->
+    <color name="text_hint">#66A0A0B0</color>
+    <!-- 品牌橙文字（评分/徽章） -->
+    <color name="text_brand">#E50914</color>
+    <!-- 强调青蓝文字 -->
+    <color name="text_accent">#0CADE2</color>
+    <!-- 暖白：信息卡片标题 -->
+    <color name="text_warm_white">#FFFFFAE0</color>
+
+    <!-- ── 聚焦 / 选中状态 ── -->
+    <!-- 焦点边框：纯白 -->
+    <color name="focus_border">#FFFFFFFF</color>
+    <!-- 焦点背景：白色毛玻璃 -->
+    <color name="focus_bg">#28FFFFFF</color>
+    <!-- 选中态背景：品牌橙半透明 -->
+    <color name="selected_bg">#40E50914</color>
+    <!-- 选中态边框 -->
+    <color name="selected_border">#E50914</color>
+    <!-- 激活态（Tab选中）-->
+    <color name="active_indicator">#E50914</color>
+
+    <!-- ── 分隔线 / 描边 ── -->
+    <color name="divider">#1AFFFFFF</color>
+    <color name="divider_strong">#33FFFFFF</color>
+    <color name="stroke_glass">#26FFFFFF</color>
+
+    <!-- ── 状态色 ── -->
+    <color name="color_success">#00C853</color>
+    <color name="color_warning">#FFB300</color>
+    <color name="color_error">#FF1744</color>
+    <color name="color_info">#0CADE2</color>
+    <color name="color_live_badge">#FF1744</color>
+
+    <!-- ── 叠加层 ── -->
+    <color name="overlay_dim">#80000000</color>
+    <color name="overlay_heavy">#CC000000</color>
+    <color name="overlay_light">#40000000</color>
+    <color name="overlay_scrim">#B3000000</color>
+
+    <!-- ──────────────────────────────────────────────────────────
+         兼容旧版颜色引用（保留以兼容现有代码，避免编译报错）
+    ────────────────────────────────────────────────────────────── -->
     <color name="color_6200EE">#6200EE</color>
     <color name="color_3700B3">#3700B3</color>
     <color name="color_03DAC5">#03DAC5</color>
     <color name="title_fouse_n">#ffce7900</color>
     <color name="color_1890FF">#1890FF</color>
-    <color name="color_FFB800">#FF6600</color>
+    <color name="color_FFB800">#E50914</color>
     <color name="color_00FF0A">#00FF0A</color>
     <color name="color_CBF46A">#CBF46A</color>
     <color name="color_FF90CA09">#90CA09</color>
     <color name="color_BD0CADE2">#BD0CADE2</color>
-    <color name="color_FF0057">#FF0057</color>
-    <color name="color_FF5F00">#FF5F00</color>
+    <color name="color_FF0057">#FF1744</color>
+    <color name="color_FF5F00">#E50914</color>
     <color name="color_FFB6C1">#FFB6C1</color>
-    <color name="color_3D3D3D">#3D3D3D</color>
-    <color name="color_32364E">#32364E</color>
-    <color name="color_6632364E">#6632364E</color>
-    <color name="color_CCFFFFFF">#BBFFFFFF</color>
+    <color name="color_3D3D3D">#1E1E2E</color>
+    <color name="color_32364E">#1C1C28</color>
+    <color name="color_6632364E">#661C1C28</color>
+    <color name="color_CCFFFFFF">#CCF0F0F5</color>
     <color name="color_0CADE2">#0CADE2</color>
-    <color name="color_6CFFFFFF">#6CFFFFFF</color>
+    <color name="color_6CFFFFFF">#20FFFFFF</color>
     <color name="color_66000000">#66000000</color>
     <color name="color_99000000">#99000000</color>
     <color name="color_FFFFFF_50">#80FFFFFF</color>
     <color name="color_CC000000">#CC000000</color>
     <color name="color_000000_30">#48000000</color>
-    <color name="color_02F8E1">#02F8E1</color>
-    <color name="color_353744">#353744</color>
-    <color name="color_CC353744">#CC353744</color>
-    <color name="color_6C3D3D3D">#6c3d3d3d</color>
-    <color name="color_BBFFFFFF">#bbffffff</color>
-    <color name="color_FFFFFF">#ffffffff</color>
-    <color name="color_33FFFFFF">#33ffffff</color>
-    <color name="color_99FFFFFF">#4D000000</color>
-    <color name="color_59353744">#59353744</color>
-    <color name="color_80FF0057">#66FF0057</color>
+    <color name="color_02F8E1">#0CADE2</color>
+    <color name="color_353744">#12121A</color>
+    <color name="color_CC353744">#CC12121A</color>
+    <color name="color_6C3D3D3D">#CC0D0D18</color>
+    <color name="color_BBFFFFFF">#CCF0F0F5</color>
+    <color name="color_FFFFFF">#FFFFFFFF</color>
+    <color name="color_33FFFFFF">#33FFFFFF</color>
+    <color name="color_99FFFFFF">#4D12121A</color>
+    <color name="color_59353744">#591C1C28</color>
+    <color name="color_80FF0057">#66FF1744</color>
     <color name="color_000000_60">#99000000</color>
-    <color name="color_dialog_bg">#88000000</color>
-    <color name="color_scrollview_bg">#44000000</color>
+    <color name="color_dialog_bg">#CC0D0D18</color>
+    <color name="color_scrollview_bg">#800D0D18</color>
     <color name="color_text_primary">#FFFFFAE0</color>
-
-
-
 </resources>

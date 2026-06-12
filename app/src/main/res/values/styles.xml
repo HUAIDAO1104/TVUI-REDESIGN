@@ -1,24 +1,31 @@
 <resources>
-    <!-- Base application theme. -->
+    <!-- ============================================================
+         Base App Theme
+    ============================================================ -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_6200EE</item>
-        <item name="colorPrimaryDark">@color/color_3700B3</item>
-        <item name="colorAccent">@color/color_03DAC5</item>
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryDark">@color/brand_primary_dark</item>
+        <item name="colorAccent">@color/brand_accent</item>
     </style>
 
+    <!-- 主 TV 无状态栏全屏主题 -->
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>//全屏即无通知栏
-        <item name="android:windowContentOverlay">@null</item>//是否有遮盖
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="android:keepScreenOn">true</item>
-        <!--        <item name="android:windowBackground">@drawable/main_bg</item>-->
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/bg_screen</item>
+        <!-- 开启硬件加速，毛玻璃模糊效果依赖 -->
+        <item name="android:hardwareAccelerated">true</item>
     </style>
-    <!-- 自定义dialog样式 -->
+
+    <!-- ============================================================
+         对话框主题
+    ============================================================ -->
+    <!-- 基础透明对话框 -->
     <style name="CustomDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -29,26 +36,152 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <!-- 带遮罩毛玻璃对话框 -->
     <style name="CustomDialogStyleDim" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <!-- ============================================================
+         EPG / 直播按钮样式
+    ============================================================ -->
     <style name="epg_window_btn">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/item_bg_selector_right</item>
-        <item name="android:paddingLeft">0dip</item>
-        <item name="android:paddingRight">0dip</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:clickable">true</item>
-        <item name="android:drawablePadding">10.0dip</item>
-        <item name="android:radius">10dp</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+    <!-- ============================================================
+         毛玻璃面板 (Glassmorphism Panel)
+         注：Android XML 原生无法实现真正模糊，此处通过半透明深色
+         + 描边 + 圆角近似实现视觉效果。
+         若要真实模糊，需在 Java 层使用 RenderScript / BlurEffect (API 31+)
+    ============================================================ -->
+
+    <!-- 毛玻璃卡片容器 -->
+    <style name="Widget.TVBox.GlassCard">
+        <item name="android:background">@drawable/bg_glass_panel</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:padding">@dimen/spacing_16</item>
+    </style>
+
+    <!-- 毛玻璃操作按钮（普通态） -->
+    <style name="Widget.TVBox.GlassButton">
+        <item name="android:background">@drawable/btn_glass_normal</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_md</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/spacing_16</item>
+        <item name="android:paddingRight">@dimen/spacing_16</item>
+        <item name="android:paddingTop">@dimen/spacing_8</item>
+        <item name="android:paddingBottom">@dimen/spacing_8</item>
+        <item name="android:focusable">true</item>
+        <item name="android:minHeight">@dimen/btn_height_md</item>
+    </style>
+
+    <!-- 品牌色主操作按钮（立即播放等） -->
+    <style name="Widget.TVBox.PrimaryButton">
+        <item name="android:background">@drawable/btn_brand_primary</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_md</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/spacing_20</item>
+        <item name="android:paddingRight">@dimen/spacing_20</item>
+        <item name="android:paddingTop">@dimen/spacing_8</item>
+        <item name="android:paddingBottom">@dimen/spacing_8</item>
+        <item name="android:focusable">true</item>
+        <item name="android:minWidth">@dimen/btn_min_width</item>
+        <item name="android:minHeight">@dimen/btn_height_md</item>
+    </style>
+
+    <!-- 描边次要按钮（快速搜索/收藏等） -->
+    <style name="Widget.TVBox.OutlinedButton">
+        <item name="android:background">@drawable/btn_outlined</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_md</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/spacing_20</item>
+        <item name="android:paddingRight">@dimen/spacing_20</item>
+        <item name="android:paddingTop">@dimen/spacing_8</item>
+        <item name="android:paddingBottom">@dimen/spacing_8</item>
+        <item name="android:focusable">true</item>
+        <item name="android:minWidth">@dimen/btn_min_width</item>
+        <item name="android:minHeight">@dimen/btn_height_md</item>
+    </style>
+
+    <!-- 播放器小功能按钮 -->
+    <style name="Widget.TVBox.PlayerButton">
+        <item name="android:background">@drawable/btn_glass_player</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_sm</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/spacing_10</item>
+        <item name="android:paddingRight">@dimen/spacing_10</item>
+        <item name="android:paddingTop">@dimen/spacing_6</item>
+        <item name="android:paddingBottom">@dimen/spacing_6</item>
+        <item name="android:focusable">true</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- ============================================================
+         文字样式
+    ============================================================ -->
+    <!-- 标题文字 -->
+    <style name="TextAppearance.TVBox.Title">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Hero 标题 -->
+    <style name="TextAppearance.TVBox.Hero">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_hero</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/overlay_heavy</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2</item>
+    </style>
+
+    <!-- 次级文字 -->
+    <style name="TextAppearance.TVBox.Body">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_md</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
+    <!-- 标签/徽章文字 -->
+    <style name="TextAppearance.TVBox.Badge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_xs</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Tab 文字 -->
+    <style name="TextAppearance.TVBox.Tab">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_lg</item>
+    </style>
+
+    <!-- Tab 选中文字 -->
+    <style name="TextAppearance.TVBox.Tab.Selected">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_lg</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

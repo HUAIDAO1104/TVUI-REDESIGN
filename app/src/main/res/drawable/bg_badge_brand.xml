@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 品牌橙徽章（评语/评分/NEW） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/brand_primary" />
+    <corners android:radius="@dimen/radius_sm" />
+</shape>

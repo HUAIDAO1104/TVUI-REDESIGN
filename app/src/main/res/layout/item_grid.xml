@@ -1,146 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    内容卡片 — Netflix 沉浸式海报风格 × 毛玻璃信息条
+    结构：
+      ┌──────────────┐
+      │  封面图        │  ← 全面占满，2:3 比例
+      │  [标签徽章]    │  ← 左上角（评分/类型/年份）
+      │               │
+      │  ▓▓ 渐变蒙版 ▓▓│  ← 底部渐变，高度约 40%
+      │  [note 评语]  │  ← 底部左对齐
+      │  [片名]       │  ← 毛玻璃信息条内
+      └──────────────┘
+      焦点态：白色发光描边 + 轻微缩放（需在 Java 层实现 scale 动画）
+-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/shape_user_focus"
+    android:layout_width="@dimen/card_poster_width_lg"
+    android:layout_height="@dimen/card_poster_height_lg"
+    android:background="@drawable/focus_card"
     android:focusable="true"
-    android:padding="@dimen/vs_1">
+    android:padding="@dimen/focus_border_strong">
 
-    <FrameLayout
-        android:layout_width="@dimen/vs_214"
-        android:layout_height="@dimen/vs_280">
+    <!-- 封面图（全面占满，centerCrop） -->
+    <ImageView
+        android:id="@+id/ivThumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@color/bg_card" />
 
-        <ImageView
-            android:id="@+id/ivThumb"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/vs_1"
-            android:scaleType="fitXY" />
+    <!-- 顶部标签行（年份 + 地区） -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_margin="@dimen/spacing_6"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/vs_5"
-            android:layout_marginTop="@dimen/vs_5"
-            android:layout_marginRight="@dimen/vs_5"
-            android:orientation="horizontal">
+            android:layout_marginEnd="@dimen/spacing_4"
+            android:background="@drawable/bg_badge_dark"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_6"
+            android:paddingRight="@dimen/spacing_6"
+            android:paddingTop="@dimen/spacing_2"
+            android:paddingBottom="@dimen/spacing_2"
+            android:singleLine="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_xs"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/vs_5"
-                android:layout_marginRight="@dimen/vs_5"
-                android:background="@drawable/shape_thumb_bottom_name"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:paddingLeft="@dimen/vs_5"
-                android:paddingRight="@dimen/vs_5"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_20" />
+        <TextView
+            android:id="@+id/tvArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_4"
+            android:background="@drawable/bg_badge_dark"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_6"
+            android:paddingRight="@dimen/spacing_6"
+            android:paddingTop="@dimen/spacing_2"
+            android:paddingBottom="@dimen/spacing_2"
+            android:singleLine="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_xs"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvArea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/vs_5"
-                android:layout_marginRight="@dimen/vs_5"
-                android:background="@drawable/shape_thumb_lang"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:paddingLeft="@dimen/vs_5"
-                android:paddingRight="@dimen/vs_5"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_20" />
+        <TextView
+            android:id="@+id/tvLang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge_dark"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_6"
+            android:paddingRight="@dimen/spacing_6"
+            android:paddingTop="@dimen/spacing_2"
+            android:paddingBottom="@dimen/spacing_2"
+            android:singleLine="true"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_xs"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvLang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/vs_5"
-                android:layout_marginRight="@dimen/vs_5"
-                android:background="@drawable/shape_thumb_year"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:paddingLeft="@dimen/vs_5"
-                android:paddingRight="@dimen/vs_5"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_20" />
+    </LinearLayout>
 
-        </LinearLayout>
+    <!-- 底部渐变蒙版（从透明到深黑，约占卡片下45%） -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_card_gradient" />
 
+    <!-- 底部信息区（毛玻璃蒙版 + 片名/评语） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/spacing_8"
+        android:paddingRight="@dimen/spacing_8"
+        android:paddingBottom="@dimen/spacing_8">
 
-        <LinearLayout
+        <!-- 评语/评分（橙色小标签） -->
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_4"
+            android:background="@drawable/bg_badge_brand"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_6"
+            android:paddingRight="@dimen/spacing_6"
+            android:paddingTop="@dimen/spacing_2"
+            android:paddingBottom="@dimen/spacing_2"
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_xs"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <!-- 片名（白色，单行，字体加粗） -->
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:padding="@dimen/vs_1">
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="Title"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:shadowColor="@color/overlay_heavy"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="4" />
 
-            <TextView
-                android:id="@+id/tvNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="@dimen/vs_5"
-                android:layout_marginRight="@dimen/vs_5"
-                android:layout_marginBottom="@dimen/vs_5"
-                android:background="@drawable/shape_thumb_note"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:paddingLeft="@dimen/vs_5"
-                android:paddingRight="@dimen/vs_5"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_20" />
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_thumb_bottom_name"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:padding="@dimen/vs_5"
-                android:singleLine="true"
-                android:text="Title"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_22" />
-
-            <TextView
-                android:id="@+id/tvActor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_thumb_bottom_name"
-                android:ellipsize="end"
-                android:gravity="top"
-                android:padding="@dimen/vs_5"
-                android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/ts_16"
-                android:visibility="gone" />
-        </LinearLayout>
-        
-        <FrameLayout
-            android:id="@+id/delFrameLayout"
+        <!-- 演员（折叠态不显示，仅收藏/历史页可选显示） -->
+        <TextView
+            android:id="@+id/tvActor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/shape_user_delete"
-            android:layout_gravity="center"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/text_tertiary"
+            android:textSize="@dimen/text_xs"
+            android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/vs_80"
-                android:layout_height="@dimen/vs_80"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/vs_20"
-                android:src="@drawable/icon_delete" />
-        </FrameLayout>
-        
+    </LinearLayout>
+
+    <!-- 删除模式遮罩层 -->
+    <FrameLayout
+        android:id="@+id/delFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC0A0A0F"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/icon_lg"
+            android:layout_height="@dimen/icon_lg"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_delete" />
+
     </FrameLayout>
+
 </FrameLayout>

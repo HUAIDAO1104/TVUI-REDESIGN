@@ -1,93 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="ts_10">10mm</dimen>
-    <dimen name="ts_16">16mm</dimen>
-    <dimen name="ts_20">20mm</dimen>
-    <dimen name="ts_22">22mm</dimen>
-    <dimen name="ts_24">24mm</dimen>
-    <dimen name="ts_26">26mm</dimen>
-    <dimen name="ts_28">28mm</dimen>
-    <dimen name="ts_30">30mm</dimen>
-    <dimen name="ts_34">34mm</dimen>
-    <dimen name="ts_40">40mm</dimen>
-    <dimen name="ts_50">50mm</dimen>
-    <dimen name="ts_100">100mm</dimen>
+    <!-- ============================================================
+         文字尺寸 (sp) — TV 设计基准 1280×720dp
+         命名规则: text_[size]
+    ============================================================ -->
+    <dimen name="text_xs">10sp</dimen>
+    <dimen name="text_sm">12sp</dimen>
+    <dimen name="text_md">14sp</dimen>
+    <dimen name="text_lg">16sp</dimen>
+    <dimen name="text_xl">18sp</dimen>
+    <dimen name="text_2xl">22sp</dimen>
+    <dimen name="text_3xl">26sp</dimen>
+    <dimen name="text_title">30sp</dimen>
+    <dimen name="text_hero">36sp</dimen>
+    <dimen name="text_display">44sp</dimen>
 
-    <dimen name="focus_border_1">1mm</dimen>
-    <dimen name="focus_border_2">2mm</dimen>
-    <dimen name="radius_5">5mm</dimen>
-    <dimen name="radius_10">8mm</dimen>
-    <dimen name="radius_20">20mm</dimen>
+    <!-- 兼容旧命名 (映射到新 sp 值) -->
+    <dimen name="ts_10">10sp</dimen>
+    <dimen name="ts_16">12sp</dimen>
+    <dimen name="ts_20">14sp</dimen>
+    <dimen name="ts_22">14sp</dimen>
+    <dimen name="ts_24">16sp</dimen>
+    <dimen name="ts_26">18sp</dimen>
+    <dimen name="ts_28">18sp</dimen>
+    <dimen name="ts_30">20sp</dimen>
+    <dimen name="ts_34">22sp</dimen>
+    <dimen name="ts_40">26sp</dimen>
+    <dimen name="ts_50">32sp</dimen>
+    <dimen name="ts_100">48sp</dimen>
 
-    <dimen name="vs_4_">-4mm</dimen>
-    <dimen name="vs_20_">-20mm</dimen>
-    <dimen name="vs_25_">-25mm</dimen>
-    <dimen name="vs_60_">-60mm</dimen>
+    <!-- ============================================================
+         间距 / 尺寸 (dp) — 统一网格基准 8dp
+         命名规则: spacing_[size] / size_[name]
+    ============================================================ -->
+    <!-- 基础间距 -->
+    <dimen name="spacing_1">1dp</dimen>
+    <dimen name="spacing_2">2dp</dimen>
+    <dimen name="spacing_4">4dp</dimen>
+    <dimen name="spacing_6">6dp</dimen>
+    <dimen name="spacing_8">8dp</dimen>
+    <dimen name="spacing_10">10dp</dimen>
+    <dimen name="spacing_12">12dp</dimen>
+    <dimen name="spacing_16">16dp</dimen>
+    <dimen name="spacing_20">20dp</dimen>
+    <dimen name="spacing_24">24dp</dimen>
+    <dimen name="spacing_28">28dp</dimen>
+    <dimen name="spacing_32">32dp</dimen>
+    <dimen name="spacing_40">40dp</dimen>
+    <dimen name="spacing_48">48dp</dimen>
+    <dimen name="spacing_56">56dp</dimen>
+    <dimen name="spacing_64">64dp</dimen>
 
-    <dimen name="vs_0">0mm</dimen>
-    <dimen name="vs_1">1mm</dimen>
-    <dimen name="vs_2">2mm</dimen>
-    <dimen name="vs_3">3mm</dimen>
-    <dimen name="vs_4">4mm</dimen>
-    <dimen name="vs_5">5mm</dimen>
-    <dimen name="vs_6">6mm</dimen>
-    <dimen name="vs_7">7mm</dimen>
-    <dimen name="vs_8">8mm</dimen>
-    <dimen name="vs_10">10mm</dimen>
-    <dimen name="vs_12">12mm</dimen>
-    <dimen name="vs_15">15mm</dimen>
-    <dimen name="vs_20">20mm</dimen>
-    <dimen name="vs_24">24mm</dimen>
-    <dimen name="vs_28">28mm</dimen>
-    <dimen name="vs_30">30mm</dimen>
-    <dimen name="vs_35">35mm</dimen>
-    <dimen name="vs_40">40mm</dimen>
-    <dimen name="vs_45">45mm</dimen>
-    <dimen name="vs_48">48mm</dimen>
-    <dimen name="vs_50">50mm</dimen>
-    <dimen name="vs_60">60mm</dimen>
-    <dimen name="vs_70">70mm</dimen>
-    <dimen name="vs_76">76mm</dimen>
-    <dimen name="vs_80">80mm</dimen>
-    <dimen name="vs_90">90mm</dimen>
-    <dimen name="vs_100">100mm</dimen>
-    <dimen name="vs_108">108mm</dimen>
-    <dimen name="vs_120">120mm</dimen>
-    <dimen name="vs_128">128mm</dimen>
-    <dimen name="vs_130">130mm</dimen>
-    <dimen name="vs_140">140mm</dimen>
-    <dimen name="vs_150">150mm</dimen>
-    <dimen name="vs_160">160mm</dimen>
-    <dimen name="vs_162">162mm</dimen>
-    <dimen name="vs_165">165mm</dimen>
-    <dimen name="vs_170">170mm</dimen>
-    <dimen name="vs_180">180mm</dimen>
-    <dimen name="vs_190">190mm</dimen>
-    <dimen name="vs_200">200mm</dimen>
-    <dimen name="vs_214">214mm</dimen>
-    <dimen name="vs_204">204mm</dimen>
-    <dimen name="vs_220">220mm</dimen>
-    <dimen name="vs_230">230mm</dimen>
-    <dimen name="vs_240">240mm</dimen>
-    <dimen name="vs_250">250mm</dimen>
-    <dimen name="vs_270">270mm</dimen>
-    <dimen name="vs_272">272mm</dimen>
-    <dimen name="vs_280">280mm</dimen>
-    <dimen name="vs_300">300mm</dimen>
-    <dimen name="vs_320">320mm</dimen>
-    <dimen name="vs_340">340mm</dimen>
-    <dimen name="vs_360">360mm</dimen>
-    <dimen name="vs_390">390mm</dimen>
-    <dimen name="vs_400">400mm</dimen>
-    <dimen name="vs_420">420mm</dimen>
-    <dimen name="vs_440">440mm</dimen>
-    <dimen name="vs_410">410mm</dimen>
-    <dimen name="vs_470">470mm</dimen>
-    <dimen name="vs_480">480mm</dimen>
-    <dimen name="vs_520">540mm</dimen>
-    <dimen name="vs_600">600mm</dimen>
-    <dimen name="vs_610">610mm</dimen>
-    <dimen name="vs_640">640mm</dimen>
-    <dimen name="vs_720">720mm</dimen>
-    <dimen name="vs_960">960mm</dimen>
+    <!-- TV 安全区水平边距 -->
+    <dimen name="tv_safe_margin_h">48dp</dimen>
+    <dimen name="tv_safe_margin_v">24dp</dimen>
+
+    <!-- 圆角 -->
+    <dimen name="radius_sm">4dp</dimen>
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">12dp</dimen>
+    <dimen name="radius_xl">16dp</dimen>
+    <dimen name="radius_2xl">24dp</dimen>
+    <dimen name="radius_pill">100dp</dimen>
+
+    <!-- 焦点边框 -->
+    <dimen name="focus_border">2dp</dimen>
+    <dimen name="focus_border_strong">3dp</dimen>
+
+    <!-- ============================================================
+         组件尺寸
+    ============================================================ -->
+    <!-- 顶部导航栏 -->
+    <dimen name="top_bar_height">52dp</dimen>
+
+    <!-- 按钮 -->
+    <dimen name="btn_height_sm">32dp</dimen>
+    <dimen name="btn_height_md">40dp</dimen>
+    <dimen name="btn_height_lg">48dp</dimen>
+    <dimen name="btn_min_width">100dp</dimen>
+
+    <!-- 图标 -->
+    <dimen name="icon_xs">16dp</dimen>
+    <dimen name="icon_sm">20dp</dimen>
+    <dimen name="icon_md">28dp</dimen>
+    <dimen name="icon_lg">36dp</dimen>
+    <dimen name="icon_xl">48dp</dimen>
+
+    <!-- 内容卡片 (竖版海报 2:3 比例) -->
+    <dimen name="card_poster_width">120dp</dimen>
+    <dimen name="card_poster_height">180dp</dimen>
+    <dimen name="card_poster_width_lg">150dp</dimen>
+    <dimen name="card_poster_height_lg">225dp</dimen>
+
+    <!-- 卡片内间距 -->
+    <dimen name="card_padding">4dp</dimen>
+    <dimen name="card_info_height">52dp</dimen>
+
+    <!-- 频道卡片 (横版 16:9) -->
+    <dimen name="card_channel_width">160dp</dimen>
+    <dimen name="card_channel_height">44dp</dimen>
+
+    <!-- 搜索栏 -->
+    <dimen name="search_input_height">44dp</dimen>
+    <dimen name="search_keyboard_width">340dp</dimen>
+    <dimen name="search_word_width">160dp</dimen>
+
+    <!-- 详情页封面 -->
+    <dimen name="detail_cover_width">180dp</dimen>
+    <dimen name="detail_cover_height">260dp</dimen>
+
+    <!-- 播放控制栏 -->
+    <dimen name="player_ctrl_height">120dp</dimen>
+    <dimen name="player_seekbar_height">6dp</dimen>
+    <dimen name="player_btn_size">36dp</dimen>
+
+    <!-- 直播频道面板 -->
+    <dimen name="live_group_width">160dp</dimen>
+    <dimen name="live_channel_width">220dp</dimen>
+    <dimen name="live_epg_width">320dp</dimen>
+    <dimen name="live_bottom_bar_height">88dp</dimen>
+
+    <!-- 设置菜单 -->
+    <dimen name="setting_menu_width">160dp</dimen>
+
+    <!-- 加载/错误图标 -->
+    <dimen name="loading_icon_size">40dp</dimen>
+
+    <!-- ============================================================
+         兼容旧命名 (vs_xx) — 映射到等效 dp 值
+         注: 原始值为 mm，TV 屏幕 1mm ≈ 3.7px @ 160dpi
+             此处按 UI 视觉比例等效转换
+    ============================================================ -->
+    <dimen name="focus_border_1">2dp</dimen>
+    <dimen name="focus_border_2">3dp</dimen>
+    <dimen name="radius_5">4dp</dimen>
+    <dimen name="radius_10">8dp</dimen>
+    <dimen name="radius_20">16dp</dimen>
+
+    <dimen name="vs_4_">-4dp</dimen>
+    <dimen name="vs_20_">-20dp</dimen>
+    <dimen name="vs_25_">-24dp</dimen>
+    <dimen name="vs_60_">-60dp</dimen>
+
+    <dimen name="vs_0">0dp</dimen>
+    <dimen name="vs_1">1dp</dimen>
+    <dimen name="vs_2">2dp</dimen>
+    <dimen name="vs_3">3dp</dimen>
+    <dimen name="vs_4">4dp</dimen>
+    <dimen name="vs_5">5dp</dimen>
+    <dimen name="vs_6">6dp</dimen>
+    <dimen name="vs_7">7dp</dimen>
+    <dimen name="vs_8">8dp</dimen>
+    <dimen name="vs_10">10dp</dimen>
+    <dimen name="vs_12">12dp</dimen>
+    <dimen name="vs_15">14dp</dimen>
+    <dimen name="vs_20">20dp</dimen>
+    <dimen name="vs_24">24dp</dimen>
+    <dimen name="vs_28">28dp</dimen>
+    <dimen name="vs_30">30dp</dimen>
+    <dimen name="vs_35">34dp</dimen>
+    <dimen name="vs_40">40dp</dimen>
+    <dimen name="vs_45">44dp</dimen>
+    <dimen name="vs_48">48dp</dimen>
+    <dimen name="vs_50">48dp</dimen>
+    <dimen name="vs_60">60dp</dimen>
+    <dimen name="vs_70">68dp</dimen>
+    <dimen name="vs_76">72dp</dimen>
+    <dimen name="vs_80">78dp</dimen>
+    <dimen name="vs_90">88dp</dimen>
+    <dimen name="vs_100">96dp</dimen>
+    <dimen name="vs_108">104dp</dimen>
+    <dimen name="vs_120">116dp</dimen>
+    <dimen name="vs_128">124dp</dimen>
+    <dimen name="vs_130">126dp</dimen>
+    <dimen name="vs_140">136dp</dimen>
+    <dimen name="vs_150">146dp</dimen>
+    <dimen name="vs_160">156dp</dimen>
+    <dimen name="vs_162">158dp</dimen>
+    <dimen name="vs_165">160dp</dimen>
+    <dimen name="vs_170">166dp</dimen>
+    <dimen name="vs_180">175dp</dimen>
+    <dimen name="vs_190">185dp</dimen>
+    <dimen name="vs_200">194dp</dimen>
+    <dimen name="vs_204">198dp</dimen>
+    <dimen name="vs_214">208dp</dimen>
+    <dimen name="vs_220">214dp</dimen>
+    <dimen name="vs_230">224dp</dimen>
+    <dimen name="vs_240">234dp</dimen>
+    <dimen name="vs_250">243dp</dimen>
+    <dimen name="vs_270">263dp</dimen>
+    <dimen name="vs_272">264dp</dimen>
+    <dimen name="vs_280">272dp</dimen>
+    <dimen name="vs_300">292dp</dimen>
+    <dimen name="vs_320">311dp</dimen>
+    <dimen name="vs_340">330dp</dimen>
+    <dimen name="vs_360">350dp</dimen>
+    <dimen name="vs_390">379dp</dimen>
+    <dimen name="vs_400">389dp</dimen>
+    <dimen name="vs_410">399dp</dimen>
+    <dimen name="vs_420">408dp</dimen>
+    <dimen name="vs_440">428dp</dimen>
+    <dimen name="vs_470">457dp</dimen>
+    <dimen name="vs_480">467dp</dimen>
+    <dimen name="vs_520">505dp</dimen>
+    <dimen name="vs_600">583dp</dimen>
+    <dimen name="vs_610">593dp</dimen>
+    <dimen name="vs_640">622dp</dimen>
+    <dimen name="vs_720">700dp</dimen>
+    <dimen name="vs_960">933dp</dimen>
 </resources>

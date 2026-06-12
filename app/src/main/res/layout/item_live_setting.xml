@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 直播设置选项条目（配套 mSettingItemView）-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="6mm"
-    android:layout_marginTop="4mm"
-    android:layout_marginRight="6mm"
-    android:layout_marginBottom="4mm"
+    android:layout_marginStart="@dimen/spacing_6"
+    android:layout_marginEnd="@dimen/spacing_6"
+    android:layout_marginTop="@dimen/spacing_4"
+    android:layout_marginBottom="@dimen/spacing_4"
     android:layout_gravity="center"
-    android:background="@drawable/shape_live_focus"
+    android:background="@drawable/focus_glass_default"
     android:focusable="true"
     android:focusableInTouchMode="false"
     android:orientation="horizontal">
 
+    <!-- 设置选项名称 -->
     <TextView
         android:id="@+id/tvSettingItemName"
-        android:layout_width="0mm"
-        android:layout_height="52mm"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/card_channel_height"
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:textSize="20mm" />
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_md" />
+
 </LinearLayout>

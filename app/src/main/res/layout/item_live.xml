@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 直播频道列表条目（旧版简单 TextView，与 activity_live_play 中 mGroupGridView 配套）-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_source_focus"
+    android:background="@drawable/focus_glass_default"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
+    <!-- 新增来源占位（默认隐藏） -->
     <TextView
         android:id="@+id/tvLiveAdd"
-        android:layout_width="190mm"
-        android:layout_height="50mm"
+        android:layout_width="@dimen/live_channel_width"
+        android:layout_height="@dimen/card_channel_height"
         android:ellipsize="end"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center"
-        android:paddingLeft="5mm"
-        android:paddingRight="5mm"
+        android:paddingStart="@dimen/spacing_6"
+        android:paddingEnd="@dimen/spacing_6"
         android:singleLine="true"
         android:text="+新增直播"
         android:textColor="@color/color_CBF46A"
-        android:textSize="24mm"
+        android:textSize="@dimen/text_lg"
         android:visibility="gone" />
 
+    <!-- 频道名称 -->
     <TextView
         android:id="@+id/tvLive"
-        android:layout_width="190mm"
-        android:layout_height="50mm"
+        android:layout_width="@dimen/live_channel_width"
+        android:layout_height="@dimen/card_channel_height"
         android:ellipsize="end"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center"
-        android:paddingLeft="5mm"
-        android:paddingRight="5mm"
+        android:paddingStart="@dimen/spacing_6"
+        android:paddingEnd="@dimen/spacing_6"
         android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:textSize="22mm" />
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_md" />
+
 </FrameLayout>

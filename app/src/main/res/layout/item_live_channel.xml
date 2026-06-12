@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 直播频道列表条目（含频道号 + 频道名，配套 mChannelGridView）-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="6mm"
-    android:layout_marginTop="4mm"
-    android:layout_marginRight="6mm"
-    android:layout_marginBottom="4mm"
-    android:background="@drawable/shape_live_focus"
+    android:layout_marginStart="@dimen/spacing_6"
+    android:layout_marginEnd="@dimen/spacing_6"
+    android:layout_marginTop="@dimen/spacing_4"
+    android:layout_marginBottom="@dimen/spacing_4"
+    android:background="@drawable/focus_glass_default"
     android:focusable="true"
     android:focusableInTouchMode="false"
     android:orientation="horizontal">
 
+    <!-- 频道序号 -->
     <TextView
         android:id="@+id/tvChannelNum"
-        android:layout_width="54mm"
-        android:layout_height="52mm"
+        android:layout_width="@dimen/spacing_48"
+        android:layout_height="@dimen/card_channel_height"
         android:ellipsize="marquee"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:textSize="19mm" />
+        android:textColor="@color/text_tertiary"
+        android:textSize="@dimen/text_sm" />
 
+    <!-- 频道名称 -->
     <TextView
         android:id="@+id/tvChannelName"
-        android:layout_width="0mm"
-        android:layout_height="52mm"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/card_channel_height"
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:gravity="center_vertical"
-        android:paddingRight="8mm"
         android:marqueeRepeatLimit="marquee_forever"
+        android:paddingEnd="@dimen/spacing_8"
         android:singleLine="true"
-        android:textColor="@android:color/white"
-        android:textSize="20mm" />
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_md" />
+
 </LinearLayout>

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 快速搜索页（activity_fast_search.xml）
+     原 20mm paddingLeft → @dimen/tv_safe_margin_h (48dp)
+     原结构保留，仅清理单位 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,24 +9,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <!-- 顶部：搜索标题 + 分词热词 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/vs_50"
         android:layout_marginTop="@dimen/vs_10"
         android:layout_marginBottom="@dimen/vs_10"
-        android:paddingLeft="20mm">
+        android:paddingStart="@dimen/tv_safe_margin_h"
+        android:paddingLeft="@dimen/tv_safe_margin_h">
 
         <TextView
             android:id="@+id/mSearchTitle"
             android:layout_width="@dimen/vs_200"
             android:layout_height="match_parent"
-            android:text="搜索(0/0)"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
             android:paddingTop="@dimen/vs_10"
-            android:textSize="@dimen/ts_22"  />
+            android:text="搜索(0/0)"
+            android:textAlignment="center"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/ts_22" />
 
         <com.owen.tvrecyclerview.widget.TvRecyclerView
             android:id="@+id/mGridViewWordFenci"
@@ -37,17 +41,20 @@
 
     </LinearLayout>
 
+    <!-- 主体：拼字键盘区 + 搜索结果区 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <!-- 左侧拼字列表 -->
         <LinearLayout
             android:id="@+id/llWord"
             android:layout_width="@dimen/vs_200"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="20mm"
+            android:paddingStart="@dimen/tv_safe_margin_h"
+            android:paddingLeft="@dimen/tv_safe_margin_h"
             android:paddingBottom="@dimen/vs_20">
 
             <com.owen.tvrecyclerview.widget.TvRecyclerView
@@ -60,18 +67,20 @@
                 app:tv_horizontalSpacingWithMargins="@dimen/vs_5"
                 app:tv_selectedItemIsCentered="true"
                 app:tv_verticalSpacingWithMargins="@dimen/vs_5" />
+
         </LinearLayout>
 
+        <!-- 右侧搜索结果 -->
         <LinearLayout
             android:id="@+id/llLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="20mm"
-            android:paddingBottom="@dimen/vs_20"
-            android:paddingRight="20mm"
-            tools:ignore="InOrMmUsage">
-
+            android:paddingStart="@dimen/tv_safe_margin_h"
+            android:paddingLeft="@dimen/tv_safe_margin_h"
+            android:paddingEnd="@dimen/tv_safe_margin_h"
+            android:paddingRight="@dimen/tv_safe_margin_h"
+            android:paddingBottom="@dimen/vs_20">
 
             <com.owen.tvrecyclerview.widget.TvRecyclerView
                 android:id="@+id/mGridView"
@@ -95,7 +104,8 @@
                 app:tv_selectedItemIsCentered="true"
                 app:tv_verticalSpacingWithMargins="@dimen/vs_5" />
 
-
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>

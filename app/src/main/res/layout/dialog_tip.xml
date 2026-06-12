@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 提示对话框 — 毛玻璃暗色卡片 + 双胶囊按钮 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="@dimen/vs_440"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/shape_dialog_bg_main"
+        android:elevation="16dp"
         android:orientation="vertical"
-        android:padding="@dimen/vs_30">
-
+        android:padding="@dimen/spacing_28">
 
         <TextView
             android:id="@+id/tipInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:lineSpacingExtra="@dimen/ts_50"
-            android:lineSpacingMultiplier="0"
+            android:lineSpacingExtra="4dp"
             android:textAlignment="gravity"
-            android:textColor="@color/color_CC000000"
-            android:textSize="@dimen/ts_24"
-            tools:text="1111111111111111111111111111111111111111111111111111" />
-
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_md"
+            tools:text="提示信息内容" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/vs_30"
+            android:layout_marginTop="@dimen/spacing_24"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/leftBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/btn_height_md"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/vs_5"
-                android:background="@drawable/button_dialog_main"
+                android:layout_marginEnd="@dimen/spacing_8"
+                android:background="@drawable/btn_brand_primary"
                 android:focusable="true"
                 android:gravity="center"
-                android:padding="@dimen/vs_10"
+                android:minWidth="@dimen/btn_min_width"
+                android:paddingLeft="@dimen/spacing_20"
+                android:paddingRight="@dimen/spacing_20"
+                android:stateListAnimator="@animator/focus_scale"
                 android:text="确定"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_22" />
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_md"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/rightBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/btn_height_md"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/vs_5"
+                android:layout_marginStart="@dimen/spacing_8"
                 android:background="@drawable/button_dialog_main"
                 android:focusable="true"
                 android:gravity="center"
-                android:padding="@dimen/vs_10"
+                android:minWidth="@dimen/btn_min_width"
+                android:paddingLeft="@dimen/spacing_20"
+                android:paddingRight="@dimen/spacing_20"
+                android:stateListAnimator="@animator/focus_scale"
                 android:text="取消"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_22" />
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_md" />
         </LinearLayout>
 
     </LinearLayout>

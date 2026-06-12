@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 配置历史对话框 — 毛玻璃暗色卡片 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,46 +7,51 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/vs_720"
+        android:layout_width="560dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/shape_dialog_bg_main">
+        android:background="@drawable/shape_dialog_bg_main"
+        android:elevation="16dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:lineSpacingExtra="@dimen/ts_40"
-            android:lineSpacingMultiplier="0"
-            android:padding="@dimen/vs_20"
+            android:paddingLeft="@dimen/spacing_24"
+            android:paddingTop="@dimen/spacing_20"
+            android:paddingRight="@dimen/spacing_24"
+            android:paddingBottom="@dimen/spacing_12"
             android:singleLine="true"
-            android:text="11111111"
-            android:textColor="@color/color_CC000000"
-            android:textSize="@dimen/ts_26"
+            android:text="历史配置"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_lg"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="11111111111111111111111" />
+            tools:text="历史配置" />
 
         <com.owen.tvrecyclerview.widget.TvRecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/vs_30"
-            android:paddingRight="@dimen/vs_30"
+            android:paddingLeft="@dimen/spacing_24"
+            android:paddingRight="@dimen/spacing_24"
             app:layout_constrainedHeight="true"
-            app:layout_constraintHeight_max="@dimen/vs_410"
+            app:layout_constraintHeight_max="340dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:tv_layoutManager="V7LinearLayoutManager"
             app:tv_selectedItemIsCentered="true"
-            app:tv_verticalSpacingWithMargins="@dimen/vs_10" />
+            app:tv_verticalSpacingWithMargins="@dimen/spacing_8" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/vs_30"
+            android:layout_height="@dimen/spacing_24"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/list" />

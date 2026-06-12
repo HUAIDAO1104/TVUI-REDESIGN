@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 筛选底部面板 — 深色毛玻璃顶部圆角浮层 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
     android:layout_width="match_parent"
-    android:minHeight="260dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:minHeight="260dp">
 
     <LinearLayout
         android:id="@+id/filterRoot"
@@ -11,8 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_dialog_filter_bg"
+        android:elevation="16dp"
         android:orientation="vertical"
-        android:padding="@dimen/vs_20">
+        android:paddingLeft="@dimen/tv_safe_margin_h"
+        android:paddingTop="@dimen/spacing_24"
+        android:paddingRight="@dimen/tv_safe_margin_h"
+        android:paddingBottom="@dimen/spacing_24">
 
     </LinearLayout>
 </FrameLayout>

@@ -1,60 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 搜索源选择对话框 — 毛玻璃暗色卡片 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/root"
-        android:layout_width="@dimen/vs_420"
+        android:layout_width="340dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@drawable/shape_dialog_pg_search_checkbox"
-        android:orientation="vertical">
-
+        android:elevation="16dp"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_16">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:weightSum="2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
             <TextView
                 android:id="@+id/checkAll"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="@dimen/btn_height_md"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_weight="1"
                 android:background="@drawable/button_dialog_main"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/vs_30"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_26"
-                android:text="全选" />
+                android:gravity="center"
+                android:stateListAnimator="@animator/focus_scale"
+                android:text="全选"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_md" />
 
             <TextView
                 android:id="@+id/clearAll"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/vs_10"
-                android:layout_weight="1"
+                android:layout_height="@dimen/btn_height_md"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_marginStart="@dimen/spacing_10"
+                android:layout_weight="1"
                 android:background="@drawable/button_dialog_main"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="@dimen/vs_30"
+                android:gravity="center"
+                android:stateListAnimator="@animator/focus_scale"
                 android:text="全不选"
-                android:textColor="@color/color_FFFFFF"
-                android:textSize="@dimen/ts_26" />
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_md" />
         </LinearLayout>
 
         <com.owen.tvrecyclerview.widget.TvRecyclerView
             android:id="@+id/mGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:layout_marginTop="@dimen/spacing_8"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical" />
 
     </LinearLayout>
 

@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>TVBox UI Preview — Netflix × Material Design + Glassmorphism</title>
+<style>
+/* ═══════════════════════════════════════════
+   全局变量 — 映射 colors.xml + dimens.xml
+═══════════════════════════════════════════ */
+:root {
+  /* 背景层次 */
+  --bg-screen:           #0A0A0F;
+  --bg-surface:          #12121A;
+  --bg-surface-elevated: #1C1C28;
+  --bg-card:             #1E1E2E;
+
+  /* 毛玻璃 */
+  --glass-dark:          rgba(13,13,24,0.80);
+  --glass-medium:        rgba(13,13,24,0.70);
+  --glass-light:         rgba(26,26,46,0.50);
+  --glass-white:         rgba(255,255,255,0.13);
+  --glass-white-focus:   rgba(255,255,255,0.19);
+  --glass-sidebar:       rgba(13,13,24,0.88);
+  --glass-player:        rgba(10,10,20,0.85);
+  --glass-panel:         rgba(13,13,24,0.80);
+
+  /* 品牌色 */
+  --brand-primary:       #E50914;
+  --brand-primary-dark:  #B20710;
+  --brand-accent:        #0CADE2;
+
+  /* 文字 */
+  --text-primary:        #FFFFFF;
+  --text-secondary:      rgba(240,240,245,0.80);
+  --text-tertiary:       rgba(202,202,213,0.60);
+  --text-hint:           rgba(160,160,176,0.40);
+
+  /* 焦点 */
+  --focus-border:        #FFFFFF;
+  --focus-bg:            rgba(255,255,255,0.16);
+  --selected-bg:         rgba(229,9,20,0.25);
+  --selected-border:     #E50914;
+
+  /* 分隔线/描边 */
+  --divider:             rgba(255,255,255,0.10);
+  --divider-strong:      rgba(255,255,255,0.20);
+  --stroke-glass:        rgba(255,255,255,0.15);
+
+  /* 间距 */
+  --spacing-4: 4px;   --spacing-6: 6px;   --spacing-8: 8px;
+  --spacing-10: 10px; --spacing-12: 12px; --spacing-16: 16px;
+  --spacing-20: 20px; --spacing-24: 24px; --spacing-32: 32px;
+  --spacing-40: 40px; --spacing-48: 48px; --spacing-56: 56px;
+
+  /* 圆角 */
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+  --radius-xl: 16px; --radius-2xl: 24px;
+
+  /* 字号 */
+  --text-xs: 10px; --text-sm: 12px; --text-md: 14px; --text-lg: 16px;
+  --text-xl: 18px; --text-2xl: 22px; --text-3xl: 26px;
+  --text-title: 30px; --text-hero: 36px; --text-display: 44px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #050508;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: var(--text-primary);
+  min-width: 1280px;
+}
+
+/* ── 页面导航 ── */
+.nav {
+  position: sticky; top: 0; z-index: 999;
+  background: rgba(10,10,20,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--divider-strong);
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 32px;
+  flex-wrap: wrap;
+}
+.nav-title {
+  font-size: 13px; font-weight: 700; color: var(--brand-primary);
+  margin-right: 12px; white-space: nowrap;
+}
+.nav a {
+  color: var(--text-secondary); text-decoration: none;
+  font-size: 12px; padding: 5px 12px; border-radius: 20px;
+  border: 1px solid var(--divider); transition: all .2s;
+  white-space: nowrap;
+}
+.nav a:hover { background: var(--glass-white); color: var(--text-primary); border-color: var(--stroke-glass); }
+
+/* ── 章节容器 ── */
+.section {
+  padding: 48px 48px 64px;
+  border-bottom: 1px solid var(--divider);
+}
+.section-header {
+  margin-bottom: 28px;
+  display: flex; align-items: baseline; gap: 16px;
+}
+.section-title {
+  font-size: 20px; font-weight: 700; color: var(--text-primary);
+}
+.section-sub {
+  font-size: 13px; color: var(--text-tertiary);
+}
+.section-badge {
+  font-size: 11px; font-weight: 700; padding: 3px 8px;
+  border-radius: 4px; background: var(--brand-primary);
+  color: white; margin-left: 8px;
+}
+
+/* ── 屏幕模拟容器 ── */
+.tv-screen {
+  width: 1184px;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-screen);
+  border: 1px solid var(--divider-strong);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.tv-screen-label {
+  font-size: 11px; color: var(--text-hint);
+  margin-top: 10px; text-align: right;
+}
+
+/* ══════════════════════════════════════
+   毛玻璃工具类
+══════════════════════════════════════ */
+.glass-panel {
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-xl);
+}
+.glass-sidebar {
+  background: var(--glass-sidebar);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-lg);
+}
+.glass-player {
+  background: var(--glass-player);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-lg);
+}
+
+/* ══════════════════════════════════════
+   1. 首页 activity_home.xml
+══════════════════════════════════════ */
+.home-screen {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0A0A0F 0%, #0D0D18 50%, #0A0814 100%);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* 顶部导航栏 */
+.home-topbar {
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 var(--spacing-48);
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(10,10,15,0.9) 0%, transparent 100%);
+  position: relative; z-index: 10;
+}
+.home-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.home-logo-icon {
+  width: 32px; height: 32px;
+  background: var(--brand-primary);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 900; color: white;
+}
+.home-logo-text {
+  font-size: 18px; font-weight: 800; color: var(--text-primary);
+  letter-spacing: 1px;
+}
+.home-time {
+  margin-left: auto;
+  font-size: 14px; color: var(--text-secondary);
+}
+
+/* Tab 栏 */
+.home-tabs {
+  padding: 0 var(--spacing-48);
+  display: flex; gap: 4px; flex-shrink: 0;
+  margin-bottom: 4px;
+}
+.home-tab {
+  padding: 8px 20px;
+  font-size: 16px; color: var(--text-secondary);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all .2s;
+}
+.home-tab.active {
+  color: var(--text-primary); font-weight: 700;
+  background: var(--glass-white);
+  border-color: var(--stroke-glass);
+  position: relative;
+}
+.home-tab.active::after {
+  content: ''; position: absolute;
+  bottom: -2px; left: 50%; transform: translateX(-50%);
+  width: 24px; height: 3px;
+  background: var(--brand-primary);
+  border-radius: 2px;
+}
+
+/* 内容区 */
+.home-content {
+  flex: 1; overflow: hidden;
+  padding: 12px var(--spacing-48) 0;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.home-section-label {
+  font-size: 13px; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.home-cards {
+  display: flex; gap: 12px; flex-wrap: nowrap;
+}
+.home-card {
+  width: 120px; flex-shrink: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all .2s;
+  cursor: pointer;
+  position: relative;
+}
+.home-card:hover { border-color: var(--focus-border); transform: scale(1.04); }
+.home-card.focused { border-color: var(--focus-border); box-shadow: 0 0 0 2px rgba(255,255,255,0.3); }
+.home-card-img {
+  width: 120px; height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.home-card-placeholder {
+  width: 120px; height: 180px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text-hint); text-align: center;
+  padding: 8px;
+}
+.home-card-gradient {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+}
+.home-card-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 6px 8px;
+  background: var(--glass-medium);
+  backdrop-filter: blur(8px);
+}
+.home-card-title {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.home-card-sub {
+  font-size: 10px; color: var(--text-tertiary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* 侧边分类面板 */
+.home-sidebar {
+  position: absolute; right: 48px; top: 52px; bottom: 0;
+  width: 60px;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 0;
+  justify-content: center; align-items: center;
+}
+
+/* ══════════════════════════════════════
+   2. 详情页 activity_detail.xml
+══════════════════════════════════════ */
+.detail-screen {
+  width: 100%; height: 100%;
+  position: relative; overflow: hidden;
+  background: var(--bg-screen);
+}
+.detail-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1a0a0a 0%, #0a0a1a 40%, #0a1a0a 100%);
+}
+.detail-bg-blur {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(229,9,20,0.12) 0%, transparent 70%);
+}
+.detail-gradient {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(10,10,15,0.95) 35%, rgba(10,10,15,0.6) 60%, rgba(10,10,15,0.2) 100%);
+}
+.detail-content {
+  position: absolute; inset: 0;
+  display: flex; padding: 40px 48px; gap: 32px;
+}
+.detail-cover {
+  flex-shrink: 0;
+  width: 180px; height: 260px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #1C1C28 0%, #2a1a2a 100%);
+  border: 1px solid var(--stroke-glass);
+  overflow: hidden; position: relative;
+}
+.detail-cover-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.detail-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--brand-primary);
+  color: white; font-size: 10px; font-weight: 700;
+  padding: 3px 6px; border-radius: var(--radius-sm);
+}
+.detail-info {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: flex-start; gap: 12px; min-width: 0;
+}
+.detail-title {
+  font-size: 36px; font-weight: 800; line-height: 1.2;
+  color: var(--text-primary);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+.detail-meta {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+}
+.detail-meta-tag {
+  font-size: 12px; color: var(--text-secondary);
+  padding: 3px 8px; border-radius: var(--radius-sm);
+  background: var(--glass-white); border: 1px solid var(--divider);
+}
+.detail-meta-tag.brand { background: rgba(229,9,20,0.2); border-color: rgba(229,9,20,0.4); color: #ff6b73; }
+.detail-desc {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.6; max-width: 560px;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.detail-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 10px 24px; border-radius: var(--radius-md);
+  background: var(--brand-primary); color: white;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  transition: all .2s; display: flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--brand-primary-dark); transform: scale(1.02); }
+.btn-outlined {
+  padding: 10px 24px; border-radius: var(--radius-md);
+  background: var(--glass-light); color: var(--text-primary);
+  font-size: 14px; font-weight: 600;
+  border: 1px solid var(--divider-strong); cursor: pointer;
+  transition: all .2s;
+}
+.btn-outlined:hover { background: var(--glass-white-focus); border-color: var(--focus-border); }
+
+/* 剧集网格 */
+.detail-glass-panel {
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-xl);
+  padding: 16px;
+}
+.detail-episodes-label {
+  font-size: 13px; font-weight: 700; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+}
+.episodes-grid {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.episode-btn {
+  width: 52px; height: 36px;
+  background: var(--glass-white);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 13px; display: flex;
+  align-items: center; justify-content: center;
+  cursor: pointer; transition: all .2s;
+}
+.episode-btn:hover, .episode-btn.focused {
+  background: var(--focus-bg);
+  border-color: var(--focus-border);
+  color: var(--text-primary);
+}
+.episode-btn.current {
+  background: rgba(229,9,20,0.2);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary); font-weight: 700;
+}
+
+/* ══════════════════════════════════════
+   3. 播放控制 player_vod_control_view.xml
+══════════════════════════════════════ */
+.player-screen {
+  width: 100%; height: 100%;
+  background: #000;
+  position: relative; overflow: hidden;
+}
+.player-video-bg {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0a0808 0%, #080a12 50%, #080810 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px; opacity: 0.15;
+}
+.player-ctrl {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--glass-player);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 12px 24px 16px;
+}
+.player-progress-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
+}
+.player-time {
+  font-size: 13px; color: var(--text-secondary);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.player-seekbar {
+  flex: 1; height: 20px; display: flex; align-items: center; cursor: pointer;
+  position: relative;
+}
+.player-seekbar-track {
+  width: 100%; height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px; position: relative;
+}
+.player-seekbar-fill {
+  height: 100%; width: 45%;
+  background: var(--brand-primary);
+  border-radius: 2px;
+}
+.player-seekbar-thumb {
+  position: absolute; left: 45%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: 14px; height: 14px;
+  background: white; border-radius: 50%;
+  box-shadow: 0 0 6px rgba(229,9,20,0.6);
+}
+.player-btns-row {
+  display: flex; gap: 6px; align-items: center;
+  flex-wrap: wrap;
+}
+.player-btn {
+  padding: 6px 12px;
+  background: rgba(51,20,30,0.5);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-primary); font-size: 12px;
+  cursor: pointer; transition: all .2s;
+  white-space: nowrap;
+}
+.player-btn:hover, .player-btn.focused {
+  background: var(--glass-white-focus);
+  border-color: var(--focus-border);
+}
+.player-btn.row2 { background: rgba(20,20,30,0.5); }
+.player-title {
+  position: absolute; top: 20px; left: 48px;
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+.player-episode {
+  position: absolute; top: 20px; right: 48px;
+  font-size: 13px; color: var(--text-secondary);
+  background: var(--glass-dark);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+}
+
+/* ══════════════════════════════════════
+   4. 搜索页 activity_search.xml
+══════════════════════════════════════ */
+.search-screen {
+  width: 100%; height: 100%;
+  background: var(--bg-screen);
+  display: flex; gap: 0;
+  overflow: hidden;
+}
+.search-keyboard {
+  width: 30%;
+  padding: 16px;
+  background: var(--glass-sidebar);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--stroke-glass);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.search-input-box {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(20,20,30,0.5);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
+.search-input-icon { font-size: 16px; color: var(--text-tertiary); }
+.search-input-text {
+  flex: 1; font-size: 18px; font-weight: 600;
+  color: var(--text-primary); letter-spacing: 1px;
+}
+.search-input-cursor {
+  width: 2px; height: 20px;
+  background: var(--brand-primary);
+  animation: blink 1s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.keyboard-rows { display: flex; flex-direction: column; gap: 4px; }
+.keyboard-row { display: flex; gap: 4px; }
+.key {
+  flex: 1; min-width: 0;
+  height: 32px; border-radius: var(--radius-sm);
+  background: var(--glass-white);
+  border: 1px solid var(--divider);
+  color: var(--text-secondary); font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all .15s;
+}
+.key:hover, .key.focused {
+  background: var(--glass-white-focus);
+  border-color: var(--focus-border);
+  color: var(--text-primary);
+}
+.key.wide { flex: 2; }
+
+.search-hotwords {
+  width: 15%;
+  padding: 16px 12px;
+  background: var(--glass-dark);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--stroke-glass);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.hotword-label {
+  font-size: 11px; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+}
+.hotword {
+  padding: 6px 8px; border-radius: var(--radius-md);
+  font-size: 12px; color: var(--text-secondary);
+  cursor: pointer; border: 1px solid transparent;
+  transition: all .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.hotword:hover { background: var(--glass-white); border-color: var(--divider); color: var(--text-primary); }
+.hotword.trending { color: var(--brand-primary); }
+.hotword-num {
+  display: inline-block; width: 16px; height: 16px;
+  background: var(--brand-primary); color: white;
+  font-size: 10px; border-radius: 3px;
+  text-align: center; line-height: 16px;
+  margin-right: 4px; font-weight: 700;
+}
+.hotword-num.gray { background: var(--glass-white); color: var(--text-tertiary); }
+
+.search-results {
+  flex: 1;
+  padding: 16px;
+  overflow: hidden; display: flex; flex-direction: column; gap: 12px;
+}
+.search-results-header {
+  display: flex; align-items: center; gap: 12px;
+}
+.search-results-title { font-size: 18px; font-weight: 700; }
+.search-results-count { font-size: 13px; color: var(--text-tertiary); }
+.search-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px; overflow: hidden;
+}
+.search-card {
+  border-radius: var(--radius-md); overflow: hidden;
+  border: 2px solid transparent; cursor: pointer; transition: all .2s;
+  position: relative;
+}
+.search-card:hover { border-color: var(--focus-border); }
+.search-card-img {
+  width: 100%; aspect-ratio: 2/3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+}
+.search-card-title {
+  padding: 4px 6px; font-size: 11px;
+  background: var(--glass-medium); color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ══════════════════════════════════════
+   5. 直播页 activity_live_play.xml
+══════════════════════════════════════ */
+.live-screen {
+  width: 100%; height: 100%;
+  background: #000;
+  position: relative; overflow: hidden;
+}
+.live-video-bg {
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #050510 0%, #0a0505 50%, #050a05 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.live-video-placeholder {
+  text-align: center; opacity: 0.08;
+}
+.live-video-placeholder .icon { font-size: 80px; display: block; }
+.live-video-placeholder .label { font-size: 16px; margin-top: 8px; }
+
+/* 左侧频道面板 */
+.live-left-panel {
+  position: absolute; left: 16px; top: 16px; bottom: 16px;
+  display: flex; gap: 0;
+  background: var(--glass-sidebar);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.live-group-col {
+  width: 100px; padding: 8px 4px;
+  border-right: 1px solid var(--divider-strong);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.live-group-item {
+  padding: 8px 10px; border-radius: var(--radius-sm);
+  font-size: 12px; color: var(--text-secondary);
+  cursor: pointer; transition: all .2s;
+}
+.live-group-item:hover, .live-group-item.active {
+  background: var(--glass-white);
+  color: var(--text-primary);
+}
+.live-group-item.active {
+  background: rgba(229,9,20,0.2);
+  color: var(--brand-primary); font-weight: 700;
+  border-left: 2px solid var(--brand-primary);
+}
+.live-channel-col {
+  width: 130px; padding: 8px 4px;
+  overflow-y: auto; display: flex; flex-direction: column; gap: 2px;
+}
+.live-channel-item {
+  padding: 8px 10px; border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; gap: 2px;
+  cursor: pointer; transition: all .2s;
+}
+.live-channel-item:hover { background: var(--glass-white); }
+.live-channel-item.focused {
+  background: var(--glass-white-focus);
+  border: 1px solid var(--focus-border);
+}
+.live-channel-name { font-size: 12px; color: var(--text-primary); font-weight: 600; }
+.live-channel-prog { font-size: 10px; color: var(--text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 右侧设置面板 */
+.live-right-panel {
+  position: absolute; right: 16px; top: 16px; bottom: 16px;
+  display: flex; gap: 0;
+  background: var(--glass-sidebar);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* 右上角徽章 */
+.live-channel-badge {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(13,13,24,0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 48px; font-weight: 900;
+  color: white; line-height: 1;
+  text-shadow: 0 0 12px rgba(12,173,226,0.6);
+}
+
+/* 右上角频道气泡 */
+.live-loading-bubble {
+  position: absolute; top: 56px; right: 16px;
+  background: var(--glass-panel);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-xl);
+  padding: 8px 16px;
+  display: flex; align-items: center; gap: 10px;
+  min-width: 160px;
+}
+.live-loading-icon {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brand-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.live-loading-name {
+  font-size: 14px; color: var(--text-primary); font-weight: 600;
+}
+
+/* 底部 EPG 栏 */
+.live-epg-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 88px;
+  background: var(--glass-panel);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid var(--stroke-glass);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  display: flex; align-items: center;
+  padding: 0 16px; gap: 0;
+}
+.live-channel-info {
+  width: 200px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px; padding: 8px 16px;
+  border-right: 1px solid var(--divider-strong);
+}
+.live-channel-logo {
+  height: 36px; display: flex; align-items: center; justify-content: center;
+}
+.live-channel-logo-text {
+  font-size: 16px; font-weight: 800;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.live-channel-subtitle { font-size: 12px; color: var(--text-tertiary); }
+
+.live-epg-info {
+  flex: 1; display: flex; flex-direction: column;
+  gap: 4px; padding: 8px 16px;
+  border-right: 1px solid var(--divider-strong);
+}
+.live-epg-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.live-now-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--brand-accent); flex-shrink: 0;
+}
+.live-next-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-tertiary); flex-shrink: 0;
+}
+.live-epg-time { font-size: 13px; color: var(--brand-accent); font-variant-numeric: tabular-nums; }
+.live-epg-time.next { color: var(--text-tertiary); }
+.live-epg-name { font-size: 14px; color: var(--text-primary); font-weight: 600; }
+.live-epg-name.next { color: var(--text-secondary); font-weight: 400; }
+.live-source-badge {
+  padding: 6px 14px; flex-shrink: 0; margin-left: 8px;
+  background: var(--brand-primary);
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 700; color: white;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════
+   6. 用户页 fragment_user.xml
+══════════════════════════════════════ */
+.user-screen {
+  width: 100%; height: 100%;
+  background: var(--bg-screen);
+  display: flex; flex-direction: column;
+  padding: 32px 48px; gap: 24px;
+  overflow: hidden;
+}
+.user-header {
+  display: flex; align-items: center; gap: 20px;
+}
+.user-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 800; color: white;
+  border: 2px solid var(--stroke-glass);
+  flex-shrink: 0;
+}
+.user-info { flex: 1; }
+.user-name { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+.user-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+
+.user-stats {
+  display: flex; gap: 12px;
+}
+.user-stat {
+  flex: 1; padding: 12px 16px;
+  background: var(--glass-white);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  text-align: center; cursor: pointer; transition: all .2s;
+}
+.user-stat:hover {
+  background: var(--glass-white-focus);
+  border-color: var(--focus-border);
+}
+.user-stat-num { font-size: 22px; font-weight: 800; color: var(--text-primary); }
+.user-stat-label { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+
+.user-menu {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+}
+.user-menu-item {
+  padding: 16px 12px;
+  background: var(--glass-white);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 8px;
+  cursor: pointer; transition: all .2s;
+}
+.user-menu-item:hover, .user-menu-item.focused {
+  background: var(--glass-white-focus);
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+}
+.user-menu-icon { font-size: 24px; }
+.user-menu-label { font-size: 13px; color: var(--text-secondary); text-align: center; }
+
+/* ══════════════════════════════════════
+   7. 色彩系统展示
+══════════════════════════════════════ */
+.color-palette {
+  display: flex; flex-wrap: wrap; gap: 12px; padding: 8px 0;
+}
+.color-chip {
+  border-radius: var(--radius-md); overflow: hidden;
+  border: 1px solid var(--divider); min-width: 120px;
+}
+.color-swatch {
+  height: 48px;
+}
+.color-info {
+  background: var(--bg-surface);
+  padding: 6px 10px;
+}
+.color-name { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
+.color-value { font-size: 10px; color: var(--text-hint); font-family: monospace; }
+
+/* ══════════════════════════════════════
+   8. 间距/字号展示
+══════════════════════════════════════ */
+.dimen-grid {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;
+}
+.dimen-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.dimen-bar {
+  background: linear-gradient(180deg, var(--brand-accent), var(--brand-primary));
+  border-radius: 2px; width: 32px;
+}
+.dimen-label { font-size: 10px; color: var(--text-tertiary); }
+.dimen-val { font-size: 10px; color: var(--brand-accent); font-family: monospace; font-weight: 700; }
+
+/* 字号展示 */
+.type-showcase { display: flex; flex-direction: column; gap: 12px; }
+.type-row { display: flex; align-items: baseline; gap: 16px; }
+.type-meta { width: 140px; font-size: 11px; color: var(--text-hint); flex-shrink: 0; font-family: monospace; }
+.type-sample { color: var(--text-primary); }
+
+/* ── 通用工具 ── */
+.flex-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tag {
+  padding: 4px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 600;
+  background: var(--glass-white); border: 1px solid var(--divider);
+  color: var(--text-secondary);
+}
+.tag.brand { background: rgba(229,9,20,0.15); border-color: rgba(229,9,20,0.4); color: #ff6b73; }
+.tag.accent { background: rgba(12,173,226,0.15); border-color: rgba(12,173,226,0.4); color: #5cc8e8; }
+.tag.success { background: rgba(0,200,83,0.15); border-color: rgba(0,200,83,0.4); color: #4de897; }
+
+.note {
+  background: rgba(12,173,226,0.08);
+  border: 1px solid rgba(12,173,226,0.2);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 12px; color: var(--text-secondary);
+  line-height: 1.6; margin-bottom: 20px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--divider-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+</style>
+</head>
+<body>
+
+<!-- ══ 导航栏 ══ -->
+<nav class="nav">
+  <span class="nav-title">📺 TVBox UI Preview</span>
+  <a href="#home">首页</a>
+  <a href="#detail">详情页</a>
+  <a href="#player">播放器</a>
+  <a href="#search">搜索</a>
+  <a href="#live">直播</a>
+  <a href="#user">用户页</a>
+  <a href="#colors">色彩系统</a>
+  <a href="#dimens">尺寸系统</a>
+  <a href="#drawables">Drawable</a>
+  <a href="#items">Item组件</a>
+  <a href="#report">完成报告</a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     § 1  首页 activity_home.xml
+══════════════════════════════════════ -->
+<section class="section" id="home">
+  <div class="section-header">
+    <span class="section-title">首页 <code style="font-size:13px;color:var(--text-tertiary)">activity_home.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">FrameLayout + ConstraintLayout · TopBar + Tab + ViewPager</span>
+  </div>
+  <div class="note">
+    ✦ FrameLayout 基底 + ConstraintLayout 主层 · 顶栏锁定 52dp · 分类 Tab 横向滚动 · 内容海报网格 16:9 安全区边距
+  </div>
+  <div class="tv-screen">
+    <div class="home-screen">
+      <!-- 背景渐变 -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(229,9,20,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+
+      <!-- TopBar -->
+      <div class="home-topbar">
+        <div class="home-logo">
+          <div class="home-logo-icon">T</div>
+          <div class="home-logo-text">TVBox</div>
+        </div>
+        <div style="flex:1;"></div>
+        <div style="font-size:12px;color:var(--text-tertiary);margin-right:16px;">优质片源 · 极速加载</div>
+        <div class="home-time">19:27</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="home-tabs">
+        <div class="home-tab active">推荐</div>
+        <div class="home-tab">电影</div>
+        <div class="home-tab">电视剧</div>
+        <div class="home-tab">综艺</div>
+        <div class="home-tab">动漫</div>
+        <div class="home-tab">纪录片</div>
+        <div class="home-tab">体育</div>
+      </div>
+
+      <!-- 分隔线 -->
+      <div style="height:1px;background:var(--divider);margin:0 48px 12px;"></div>
+
+      <!-- 内容区 -->
+      <div class="home-content">
+        <div class="home-section-label">猜你喜欢</div>
+        <div class="home-cards">
+          <!-- 卡片模拟 -->
+          <div class="home-card focused">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a0a15,#2a1520);">🎬<br>动作大片</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">狂飙</div>
+              <div class="home-card-sub">2023 · 电视剧</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#0a1a15,#152015);">🎭<br>剧情</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">漫长的季节</div>
+              <div class="home-card-sub">2023 · 悬疑</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#0a0a1a,#15152a);">🚀<br>科幻</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">三体</div>
+              <div class="home-card-sub">2023 · 科幻</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a1a0a,#2a2015);">😂<br>喜剧</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">欢乐颂</div>
+              <div class="home-card-sub">2022 · 都市</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a0a0a,#2a1515);">❤️<br>爱情</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">去有风的地方</div>
+              <div class="home-card-sub">2023 · 爱情</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#0a1a1a,#152025);">🏔️<br>冒险</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">雪中悍刀行</div>
+              <div class="home-card-sub">2022 · 武侠</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#150a1a,#22152a);">🎵<br>音乐</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">披荆斩棘</div>
+              <div class="home-card-sub">2023 · 综艺</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a1505,#2a2010);">🥷<br>古装</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">风起陇西</div>
+              <div class="home-card-sub">2022 · 历史</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-section-label" style="margin-top:8px;">最近更新</div>
+        <div class="home-cards">
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#050a1a,#101525);height:180px;">📺<br>最新上线</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">黑暗荣耀</div>
+              <div class="home-card-sub">更新至16集</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a0508,#2a1015);height:180px;">🎪<br>综艺</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">乘风破浪</div>
+              <div class="home-card-sub">更新至08期</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#050f05,#101a10);height:180px;">🌿<br>纪录片</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">航拍中国</div>
+              <div class="home-card-sub">4K 正片</div>
+            </div>
+          </div>
+          <div class="home-card">
+            <div class="home-card-placeholder" style="background:linear-gradient(135deg,#1a0a00,#2a1a05);height:180px;">⚔️<br>历史</div>
+            <div class="home-card-gradient"></div>
+            <div class="home-card-info">
+              <div class="home-card-title">大秦赋</div>
+              <div class="home-card-sub">全78集</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">1184 × 666dp · 横屏固定 · 分类 Tab 选中态带品牌红下划线</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 2  详情页 activity_detail.xml
+══════════════════════════════════════ -->
+<section class="section" id="detail">
+  <div class="section-header">
+    <span class="section-title">详情页 <code style="font-size:13px;color:var(--text-tertiary)">activity_detail.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">FrameLayout + 模糊背景层 + 渐变蒙版 + 毛玻璃信息面板</span>
+  </div>
+  <div class="note">
+    ✦ 全屏封面模糊背景 → 左右渐变蒙版 → 左侧封面 + 右侧信息（标题/元数据/简介/操作按钮）→ 下方剧集网格（毛玻璃面板）
+  </div>
+  <div class="tv-screen">
+    <div class="detail-screen">
+      <div class="detail-bg"></div>
+      <div class="detail-bg-blur"></div>
+      <!-- 模糊背景层占位（实际由 Java ImageView bgBlurThumb 填充） -->
+      <div style="position:absolute;inset:0;background:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect fill=%22%231a0a15%22 width=%22400%22 height=%22300%22/><circle cx=%22120%22 cy=%22150%22 r=%22100%22 fill=%22%23300a20%22/></svg>') center/cover;filter:blur(40px);opacity:0.4;"></div>
+      <div class="detail-gradient"></div>
+      <div class="detail-content">
+        <!-- 封面 -->
+        <div class="detail-cover">
+          <div class="detail-cover-placeholder">🎬</div>
+          <div class="detail-badge">HD</div>
+        </div>
+        <!-- 信息 -->
+        <div class="detail-info">
+          <div class="detail-title">狂飙</div>
+          <div class="detail-meta">
+            <span class="detail-meta-tag brand">9.0分</span>
+            <span class="detail-meta-tag">2023</span>
+            <span class="detail-meta-tag">悬疑 · 犯罪</span>
+            <span class="detail-meta-tag">全39集</span>
+            <span class="detail-meta-tag">张译 · 张颂文</span>
+          </div>
+          <div class="detail-desc">
+            一个扫黑除恶专项行动组在追查过去20年间一桩旧案时，
+            意外发现了涉黑团伙"盛唐集团"背后隐藏着的惊天秘密。
+            正义与邪恶之间，是一场关乎人性的终极较量……
+          </div>
+          <div class="detail-actions">
+            <button class="btn-primary">▶ 立即播放</button>
+            <button class="btn-outlined">★ 收藏</button>
+            <button class="btn-outlined">⚡ 快速搜索</button>
+            <button class="btn-outlined">↓ 追剧</button>
+          </div>
+          <!-- 剧集面板 -->
+          <div class="detail-glass-panel" style="margin-top:8px;">
+            <div class="detail-episodes-label">选集</div>
+            <div class="episodes-grid">
+              <div class="episode-btn current">01</div>
+              <div class="episode-btn">02</div>
+              <div class="episode-btn">03</div>
+              <div class="episode-btn focused">04</div>
+              <div class="episode-btn">05</div>
+              <div class="episode-btn">06</div>
+              <div class="episode-btn">07</div>
+              <div class="episode-btn">08</div>
+              <div class="episode-btn">09</div>
+              <div class="episode-btn">10</div>
+              <div class="episode-btn">11</div>
+              <div class="episode-btn">12</div>
+              <div class="episode-btn">13</div>
+              <div class="episode-btn">14</div>
+              <div class="episode-btn">15</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">封面 180×260dp · 渐变蒙版锁左侧 · 剧集面板 bg_glass_panel</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 3  播放器 player_vod_control_view.xml
+══════════════════════════════════════ -->
+<section class="section" id="player">
+  <div class="section-header">
+    <span class="section-title">VOD 播放控制栏 <code style="font-size:13px;color:var(--text-tertiary)">player_vod_control_view.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">毛玻璃底栏 · 双排按钮 · 进度条 + 时间</span>
+  </div>
+  <div class="note">
+    ✦ bg_glass_player 底栏（全宽）· 进度行（暂停键+当前时间+SeekBar+总时长）· 第一排主功能按钮 · 第二排扩展功能按钮
+  </div>
+  <div class="tv-screen">
+    <div class="player-screen">
+      <div class="player-video-bg">▶</div>
+      <div class="player-title">狂飙 第4集</div>
+      <div class="player-episode">第 4 / 39 集</div>
+      <!-- 控制栏 -->
+      <div class="player-ctrl">
+        <!-- 进度行 -->
+        <div class="player-progress-row">
+          <div style="font-size:16px;cursor:pointer;color:var(--text-secondary);">⏸</div>
+          <div class="player-time">00:18:43</div>
+          <div class="player-seekbar">
+            <div class="player-seekbar-track">
+              <div class="player-seekbar-fill"></div>
+              <div class="player-seekbar-thumb"></div>
+            </div>
+          </div>
+          <div class="player-time" style="color:var(--text-tertiary);">00:43:22</div>
+        </div>
+        <!-- 第一排：主功能 -->
+        <div class="player-btns-row">
+          <span style="font-size:10px;color:var(--text-hint);margin-right:4px;">主功能</span>
+          <div class="player-btn focused">⏮ 上一集</div>
+          <div class="player-btn">⏭ 下一集</div>
+          <div class="player-btn">↩ 回看10s</div>
+          <div class="player-btn">🔄 刷新</div>
+          <div class="player-btn">⚡ 倍速 1.0×</div>
+          <div class="player-btn">⛶ 比例</div>
+          <div class="player-btn">🖥 显示</div>
+        </div>
+        <!-- 第二排：扩展功能 -->
+        <div class="player-btns-row" style="margin-top:4px;">
+          <span style="font-size:10px;color:var(--text-hint);margin-right:4px;">扩展</span>
+          <div class="player-btn row2">🎬 解码</div>
+          <div class="player-btn row2">💬 字幕</div>
+          <div class="player-btn row2">🔊 音轨</div>
+          <div class="player-btn row2">⏱ 片头</div>
+          <div class="player-btn row2">⏱ 片尾</div>
+          <div class="player-btn row2">↺ 重置</div>
+          <div class="player-btn row2">⟳ 旋转</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">bg_glass_player 底栏 · 双排7键布局 · 进度 SeekBar + 时间戳</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 4  搜索页 activity_search.xml
+══════════════════════════════════════ -->
+<section class="section" id="search">
+  <div class="section-header">
+    <span class="section-title">搜索页 <code style="font-size:13px;color:var(--text-tertiary)">activity_search.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">三栏权重布局 3:1.5:5.5 · 毛玻璃侧边 · 搜索输入框</span>
+  </div>
+  <div class="note">
+    ✦ 左侧 30% 键盘（bg_glass_sidebar）· 中间 15% 热词（bg_glass_dark）· 右侧 55% 结果网格 · 输入框 bg_glass_input + 搜索图标
+  </div>
+  <div class="tv-screen">
+    <div class="search-screen">
+      <!-- 键盘区 30% -->
+      <div class="search-keyboard">
+        <!-- 输入框 -->
+        <div class="search-input-box">
+          <span class="search-input-icon">🔍</span>
+          <div class="search-input-text">狂飙</div>
+          <div class="search-input-cursor"></div>
+        </div>
+        <!-- 数字行 -->
+        <div class="keyboard-rows">
+          <div class="keyboard-row">
+            <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+            <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+            <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+            <div class="key">0</div>
+          </div>
+          <div class="keyboard-row">
+            <div class="key">Q</div><div class="key">W</div><div class="key">E</div>
+            <div class="key">R</div><div class="key">T</div><div class="key">Y</div>
+            <div class="key">U</div><div class="key">I</div><div class="key">O</div>
+            <div class="key">P</div>
+          </div>
+          <div class="keyboard-row">
+            <div class="key">A</div><div class="key">S</div><div class="key">D</div>
+            <div class="key">F</div><div class="key">G</div><div class="key">H</div>
+            <div class="key">J</div><div class="key">K</div><div class="key">L</div>
+          </div>
+          <div class="keyboard-row">
+            <div class="key">Z</div><div class="key">X</div><div class="key">C</div>
+            <div class="key">V</div><div class="key">B</div><div class="key">N</div>
+            <div class="key">M</div>
+          </div>
+          <div class="keyboard-row">
+            <div class="key wide focused">⌫ 删除</div>
+            <div class="key wide">⎵ 空格</div>
+            <div class="key wide" style="background:rgba(229,9,20,0.2);border-color:rgba(229,9,20,0.4);color:#ff6b73;">搜索</div>
+          </div>
+          <div class="keyboard-row">
+            <div class="key wide">拼音</div>
+            <div class="key wide">字母</div>
+            <div class="key wide">符号</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 热词区 15% -->
+      <div class="search-hotwords">
+        <div class="hotword-label">🔥 热搜</div>
+        <div class="hotword trending"><span class="hotword-num">1</span>狂飙</div>
+        <div class="hotword trending"><span class="hotword-num">2</span>漫长的季节</div>
+        <div class="hotword trending"><span class="hotword-num">3</span>三体</div>
+        <div class="hotword"><span class="hotword-num gray">4</span>去有风的地方</div>
+        <div class="hotword"><span class="hotword-num gray">5</span>风起陇西</div>
+        <div class="hotword"><span class="hotword-num gray">6</span>雪中悍刀行</div>
+        <div class="hotword"><span class="hotword-num gray">7</span>流浪地球2</div>
+        <div class="hotword"><span class="hotword-num gray">8</span>满江红</div>
+        <div style="margin-top:8px;border-top:1px solid var(--divider);padding-top:8px;">
+          <div class="hotword-label">⏱ 搜索历史</div>
+          <div class="hotword">爱情公寓</div>
+          <div class="hotword">甄嬛传</div>
+          <div class="hotword">琅琊榜</div>
+        </div>
+      </div>
+
+      <!-- 结果区 55% -->
+      <div class="search-results">
+        <div class="search-results-header">
+          <div class="search-results-title">"狂飙" 的搜索结果</div>
+          <div class="search-results-count">共找到 12 条结果</div>
+        </div>
+        <div class="search-grid">
+          <div class="search-card focused">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#1a0a15,#2a1520);">🎬</div>
+            <div class="search-card-title">狂飙 (2023)</div>
+          </div>
+          <div class="search-card">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#0a1015,#151a20);">📺</div>
+            <div class="search-card-title">狂飙 普通话版</div>
+          </div>
+          <div class="search-card">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#15100a,#201510);">🎭</div>
+            <div class="search-card-title">狂飙 4K版</div>
+          </div>
+          <div class="search-card">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#0a1510,#101f15);">🌟</div>
+            <div class="search-card-title">狂飙 幕后故事</div>
+          </div>
+          <div class="search-card">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#150a10,#201015);">🎪</div>
+            <div class="search-card-title">狂飙 花絮</div>
+          </div>
+          <div class="search-card">
+            <div class="search-card-img" style="background:linear-gradient(135deg,#10150a,#151f10);">📽</div>
+            <div class="search-card-title">狂飙 OST</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">三栏比例 30% : 15% : 55% · 毛玻璃键盘+热词侧栏 · 结果自适应网格</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 5  直播页 activity_live_play.xml
+══════════════════════════════════════ -->
+<section class="section" id="live">
+  <div class="section-header">
+    <span class="section-title">直播播放 <code style="font-size:13px;color:var(--text-tertiary)">activity_live_play.xml</code></span>
+    <span class="section-badge">本次重构</span>
+    <span class="section-sub">毛玻璃频道面板 + ConstraintLayout EPG底栏 + 单位规范化</span>
+  </div>
+  <div class="note">
+    ✦ 左侧 bg_glass_sidebar 频道面板（分类列+频道列）· 右侧 bg_glass_sidebar 设置面板 · 底部 88dp EPG 栏（ConstraintLayout 三栏）· 右上角 48sp 台号 + 加载气泡
+  </div>
+  <div class="tv-screen">
+    <div class="live-screen">
+      <!-- 视频背景 -->
+      <div class="live-video-bg">
+        <div class="live-video-placeholder">
+          <span class="icon">📡</span>
+          <span class="label" style="color:rgba(255,255,255,0.2);font-size:14px;">CCTV-1 高清</span>
+        </div>
+      </div>
+
+      <!-- 左侧频道列表面板 -->
+      <div class="live-left-panel">
+        <div class="live-group-col">
+          <div class="live-group-item active">央视</div>
+          <div class="live-group-item">卫视</div>
+          <div class="live-group-item">地方</div>
+          <div class="live-group-item">港澳台</div>
+          <div class="live-group-item">体育</div>
+          <div class="live-group-item">娱乐</div>
+          <div class="live-group-item">新闻</div>
+          <div class="live-group-item">少儿</div>
+        </div>
+        <div class="live-channel-col">
+          <div class="live-channel-item focused">
+            <div class="live-channel-name">CCTV-1</div>
+            <div class="live-channel-prog">新闻联播</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">CCTV-2</div>
+            <div class="live-channel-prog">经济半小时</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">CCTV-4</div>
+            <div class="live-channel-prog">中文国际</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">CCTV-5+</div>
+            <div class="live-channel-prog">体育赛事</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">CCTV-6</div>
+            <div class="live-channel-prog">电影频道</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">CCTV-8</div>
+            <div class="live-channel-prog">电视剧</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右上角台号（48sp，缩小后的合理字号） -->
+      <div class="live-channel-badge">001</div>
+
+      <!-- 右上角频道加载气泡 -->
+      <div class="live-loading-bubble" style="top:80px;">
+        <div class="live-loading-icon">📺</div>
+        <div>
+          <div class="live-loading-name">CCTV-1 高清</div>
+          <div style="font-size:11px;color:var(--text-tertiary);">正在加载…</div>
+        </div>
+      </div>
+
+      <!-- 右侧设置面板 -->
+      <div class="live-right-panel">
+        <div class="live-group-col" style="width:90px;">
+          <div class="live-group-item active">画质</div>
+          <div class="live-group-item">音轨</div>
+          <div class="live-group-item">解码</div>
+          <div class="live-group-item">缩放</div>
+          <div class="live-group-item">线路</div>
+        </div>
+        <div class="live-channel-col" style="width:110px;">
+          <div class="live-channel-item active" style="background:rgba(229,9,20,0.15);border:1px solid var(--brand-primary);">
+            <div class="live-channel-name" style="color:var(--brand-primary);">4K超高清</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">1080P</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">720P</div>
+          </div>
+          <div class="live-channel-item">
+            <div class="live-channel-name">480P</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部 EPG 信息栏 -->
+      <div class="live-epg-bar">
+        <!-- 左：频道信息 -->
+        <div class="live-channel-info">
+          <div class="live-channel-logo">
+            <div class="live-channel-logo-text">CCTV·1</div>
+          </div>
+          <div class="live-channel-subtitle">综合频道 · 高清</div>
+        </div>
+        <!-- 中：节目信息 -->
+        <div class="live-epg-info">
+          <div class="live-epg-row">
+            <div class="live-now-dot"></div>
+            <div class="live-epg-time">19:00</div>
+            <div style="width:6px;"></div>
+            <div class="live-epg-name">新闻联播</div>
+            <div style="flex:1;"></div>
+            <div style="font-size:11px;color:var(--brand-accent);">▶ 正在播出</div>
+          </div>
+          <div style="height:1px;background:var(--divider);margin:3px 0;"></div>
+          <div class="live-epg-row">
+            <div class="live-next-dot"></div>
+            <div class="live-epg-time next">19:30</div>
+            <div style="width:6px;"></div>
+            <div class="live-epg-name next">焦点访谈</div>
+            <div style="flex:1;"></div>
+            <div style="font-size:11px;color:var(--text-hint);">即将播出</div>
+          </div>
+        </div>
+        <!-- 右：节目源 -->
+        <div class="live-source-badge">源 1/3</div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">左侧 bg_glass_sidebar 频道面板 · 底部 88dp EPG ConstraintLayout 三栏 · 台号 48sp（原96sp）</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 6  用户页 fragment_user.xml
+══════════════════════════════════════ -->
+<section class="section" id="user">
+  <div class="section-header">
+    <span class="section-title">用户中心 <code style="font-size:13px;color:var(--text-tertiary)">fragment_user.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">毛玻璃功能卡片 · focus_glass_default 焦点系统</span>
+  </div>
+  <div class="tv-screen" style="height:400px;aspect-ratio:unset;">
+    <div class="user-screen">
+      <!-- 顶部用户信息 -->
+      <div class="user-header">
+        <div class="user-avatar">T</div>
+        <div class="user-info">
+          <div class="user-name">TVBox 用户</div>
+          <div class="user-sub">上次登录：2026-06-12 · 已使用 128 天</div>
+        </div>
+      </div>
+      <!-- 统计卡片 -->
+      <div class="user-stats">
+        <div class="user-stat">
+          <div class="user-stat-num" style="color:var(--brand-primary);">42</div>
+          <div class="user-stat-label">观看历史</div>
+        </div>
+        <div class="user-stat focused" style="border-color:var(--focus-border);background:var(--glass-white-focus);">
+          <div class="user-stat-num" style="color:var(--brand-accent);">128</div>
+          <div class="user-stat-label">我的收藏</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-num">7</div>
+          <div class="user-stat-label">追剧列表</div>
+        </div>
+        <div class="user-stat">
+          <div class="user-stat-num" style="color:var(--brand-accent);">3</div>
+          <div class="user-stat-label">订阅源</div>
+        </div>
+      </div>
+      <!-- 功能菜单 -->
+      <div class="user-menu">
+        <div class="user-menu-item">
+          <div class="user-menu-icon">⚙️</div>
+          <div class="user-menu-label">系统设置</div>
+        </div>
+        <div class="user-menu-item focused" style="border-color:var(--focus-border);background:var(--glass-white-focus);">
+          <div class="user-menu-icon">🔗</div>
+          <div class="user-menu-label">配置管理</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">📦</div>
+          <div class="user-menu-label">本地解析</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">💾</div>
+          <div class="user-menu-label">缓存管理</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">🌐</div>
+          <div class="user-menu-label">网络检测</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">🔄</div>
+          <div class="user-menu-label">检查更新</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">ℹ️</div>
+          <div class="user-menu-label">关于</div>
+        </div>
+        <div class="user-menu-item">
+          <div class="user-menu-icon">🚪</div>
+          <div class="user-menu-label">退出</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tv-screen-label">focus_glass_default 焦点卡片 · 统计卡 + 8宫格功能菜单</div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 7  色彩系统
+══════════════════════════════════════ -->
+<section class="section" id="colors">
+  <div class="section-header">
+    <span class="section-title">色彩系统 <code style="font-size:13px;color:var(--text-tertiary)">colors.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">语义化命名 · 毛玻璃体系 · 品牌橙红 + 信息蓝</span>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:24px;">
+
+    <div>
+      <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:12px;font-weight:600;">背景层次</div>
+      <div class="color-palette">
+        <div class="color-chip"><div class="color-swatch" style="background:#0A0A0F;"></div><div class="color-info"><div class="color-name">bg_screen</div><div class="color-value">#0A0A0F</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#12121A;"></div><div class="color-info"><div class="color-name">bg_surface</div><div class="color-value">#12121A</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#1C1C28;"></div><div class="color-info"><div class="color-name">bg_surface_elevated</div><div class="color-value">#1C1C28</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#1E1E2E;"></div><div class="color-info"><div class="color-name">bg_card</div><div class="color-value">#1E1E2E</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:12px;font-weight:600;">毛玻璃体系（Glassmorphism）</div>
+      <div class="color-palette">
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(13,13,24,0.80);border:1px solid rgba(255,255,255,0.15);"></div><div class="color-info"><div class="color-name">glass_dark</div><div class="color-value">#CC0D0D18</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(13,13,24,0.70);border:1px solid rgba(255,255,255,0.15);"></div><div class="color-info"><div class="color-name">glass_medium</div><div class="color-value">#B20D0D18</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(26,26,46,0.50);border:1px solid rgba(255,255,255,0.15);"></div><div class="color-info"><div class="color-name">glass_light</div><div class="color-value">#801A1A2E</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.2);"></div><div class="color-info"><div class="color-name">glass_white</div><div class="color-value">#20FFFFFF</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(255,255,255,0.19);border:1px solid rgba(255,255,255,0.3);"></div><div class="color-info"><div class="color-name">glass_white_focus</div><div class="color-value">#30FFFFFF</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:12px;font-weight:600;">品牌色</div>
+      <div class="color-palette">
+        <div class="color-chip"><div class="color-swatch" style="background:#E50914;"></div><div class="color-info"><div class="color-name">brand_primary</div><div class="color-value">#E50914</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#B20710;"></div><div class="color-info"><div class="color-name">brand_primary_dark</div><div class="color-value">#B20710</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#0CADE2;"></div><div class="color-info"><div class="color-name">brand_accent</div><div class="color-value">#0CADE2</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#0990BD;"></div><div class="color-info"><div class="color-name">brand_accent_dark</div><div class="color-value">#0990BD</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:12px;font-weight:600;">文字层次</div>
+      <div class="color-palette">
+        <div class="color-chip"><div class="color-swatch" style="background:#FFF;"></div><div class="color-info"><div class="color-name">text_primary</div><div class="color-value">#FFFFFFFF</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(240,240,245,0.80);"></div><div class="color-info"><div class="color-name">text_secondary</div><div class="color-value">#CCF0F0F5</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(202,202,213,0.60);"></div><div class="color-info"><div class="color-name">text_tertiary</div><div class="color-value">#99CACAD5</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:rgba(160,160,176,0.40);"></div><div class="color-info"><div class="color-name">text_hint</div><div class="color-value">#66A0A0B0</div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:12px;font-weight:600;">状态色</div>
+      <div class="color-palette">
+        <div class="color-chip"><div class="color-swatch" style="background:#00C853;"></div><div class="color-info"><div class="color-name">color_success</div><div class="color-value">#00C853</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#FFB300;"></div><div class="color-info"><div class="color-name">color_warning</div><div class="color-value">#FFB300</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#FF1744;"></div><div class="color-info"><div class="color-name">color_error</div><div class="color-value">#FF1744</div></div></div>
+        <div class="color-chip"><div class="color-swatch" style="background:#0CADE2;"></div><div class="color-info"><div class="color-name">color_info</div><div class="color-value">#0CADE2</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 8  尺寸系统
+══════════════════════════════════════ -->
+<section class="section" id="dimens">
+  <div class="section-header">
+    <span class="section-title">尺寸系统 <code style="font-size:13px;color:var(--text-tertiary)">dimens.xml</code></span>
+    <span class="section-badge">已重构</span>
+    <span class="section-sub">93项 mm → dp/sp · 语义化命名 · vs_xx/ts_xx 兼容别名</span>
+  </div>
+
+  <!-- 字号 -->
+  <div style="margin-bottom:32px;">
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:16px;font-weight:600;">文字尺寸 (sp)</div>
+    <div class="type-showcase">
+      <div class="type-row"><div class="type-meta">text_xs · 10sp</div><div class="type-sample" style="font-size:10px;">正文辅助文字 Subtitle secondary text</div></div>
+      <div class="type-row"><div class="type-meta">text_sm · 12sp</div><div class="type-sample" style="font-size:12px;">标签文字 Badge / Tag Label</div></div>
+      <div class="type-row"><div class="type-meta">text_md · 14sp</div><div class="type-sample" style="font-size:14px;">正文文字 Body text 主要内容段落</div></div>
+      <div class="type-row"><div class="type-meta">text_lg · 16sp</div><div class="type-sample" style="font-size:16px;">Tab 标签 / 次要标题 Navigation</div></div>
+      <div class="type-row"><div class="type-meta">text_xl · 18sp</div><div class="type-sample" style="font-size:18px;">小标题 Section Title</div></div>
+      <div class="type-row"><div class="type-meta">text_2xl · 22sp</div><div class="type-sample" style="font-size:22px;">时间显示 / 数据统计 22sp</div></div>
+      <div class="type-row"><div class="type-meta">text_3xl · 26sp</div><div class="type-sample" style="font-size:26px;">EPG 节目名 标题行 26sp</div></div>
+      <div class="type-row"><div class="type-meta">text_title · 30sp</div><div class="type-sample" style="font-size:30px;font-weight:700;">页面标题 Page Title 30sp</div></div>
+      <div class="type-row"><div class="type-meta">text_hero · 36sp</div><div class="type-sample" style="font-size:36px;font-weight:800;">详情标题 Hero 36sp</div></div>
+      <div class="type-row"><div class="type-meta">text_display · 44sp</div><div class="type-sample" style="font-size:44px;font-weight:900;background:linear-gradient(90deg,var(--brand-primary),var(--brand-accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Display 44sp</div></div>
+    </div>
+    <div style="margin-top:16px;padding:12px;background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--divider);">
+      <div style="font-size:12px;color:var(--brand-accent);font-weight:700;margin-bottom:6px;">📝 关键修复</div>
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.8;">
+        <code style="color:var(--brand-primary);">tv_selected_channel</code>: <span style="text-decoration:line-through;color:var(--text-hint);">96sp (原始)</span>  →  <span style="color:var(--text-primary);font-weight:700;">48sp (修复)</span> &nbsp;|&nbsp;
+        <code style="color:var(--brand-primary);">tvChannel</code>: <span style="text-decoration:line-through;color:var(--text-hint);">36mm</span>  →  <span style="color:var(--text-primary);font-weight:700;">30sp</span> &nbsp;|&nbsp;
+        <code style="color:var(--brand-primary);">tvTime/tvNetSpeed</code>: <span style="text-decoration:line-through;color:var(--text-hint);">22mm</span>  →  <span style="color:var(--text-primary);font-weight:700;">22sp</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 间距 -->
+  <div style="margin-bottom:32px;">
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:16px;font-weight:600;">间距 (dp) — 8dp 网格基准</div>
+    <div class="dimen-grid">
+      <div class="dimen-item"><div class="dimen-bar" style="height:4px;"></div><div class="dimen-label">spacing_4</div><div class="dimen-val">4dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:8px;"></div><div class="dimen-label">spacing_8</div><div class="dimen-val">8dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:12px;"></div><div class="dimen-label">spacing_12</div><div class="dimen-val">12dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:16px;"></div><div class="dimen-label">spacing_16</div><div class="dimen-val">16dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:20px;"></div><div class="dimen-label">spacing_20</div><div class="dimen-val">20dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:24px;"></div><div class="dimen-label">spacing_24</div><div class="dimen-val">24dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:32px;"></div><div class="dimen-label">spacing_32</div><div class="dimen-val">32dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:40px;"></div><div class="dimen-label">spacing_40</div><div class="dimen-val">40dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:48px;"></div><div class="dimen-label">spacing_48</div><div class="dimen-val">48dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:56px;"></div><div class="dimen-label">spacing_56</div><div class="dimen-val">56dp</div></div>
+      <div class="dimen-item"><div class="dimen-bar" style="height:64px;"></div><div class="dimen-label">spacing_64</div><div class="dimen-val">64dp</div></div>
+    </div>
+  </div>
+
+  <!-- 圆角 -->
+  <div>
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:16px;font-weight:600;">圆角半径 (dp)</div>
+    <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;background:var(--glass-white);border:1px solid var(--divider);border-radius:4px;margin-bottom:6px;"></div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_sm<br><span style="color:var(--brand-accent);">4dp</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;margin-bottom:6px;"></div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_md<br><span style="color:var(--brand-accent);">8dp</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;background:var(--glass-white);border:1px solid var(--divider);border-radius:12px;margin-bottom:6px;"></div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_lg<br><span style="color:var(--brand-accent);">12dp</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;background:var(--glass-white);border:1px solid var(--divider);border-radius:16px;margin-bottom:6px;"></div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_xl<br><span style="color:var(--brand-accent);">16dp</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;background:var(--glass-white);border:1px solid var(--divider);border-radius:24px;margin-bottom:6px;"></div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_2xl<br><span style="color:var(--brand-accent);">24dp</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px;height:40px;background:var(--brand-primary);border-radius:100px;margin-bottom:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;">Pill</div>
+        <div style="font-size:11px;color:var(--text-tertiary);">radius_pill<br><span style="color:var(--brand-accent);">100dp</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     § 9  Drawable 资源一览
+══════════════════════════════════════ -->
+<section class="section" id="drawables">
+  <div class="section-header">
+    <span class="section-title">新增 Drawable 资源</span>
+    <span class="section-badge">16个新建</span>
+    <span class="section-sub">毛玻璃面板 · 焦点状态 · 按钮变体 · 徽章/渐变</span>
+  </div>
+
+  <!-- 毛玻璃面板 -->
+  <div style="margin-bottom:28px;">
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:14px;font-weight:600;">毛玻璃面板 (bg_glass_*.xml)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="width:160px;height:80px;background:rgba(13,13,24,0.80);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.6);">bg_glass_panel</div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">#CC0D0D18 · radius_xl</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:160px;height:80px;background:rgba(13,13,24,0.88);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.6);">bg_glass_sidebar</div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">#E00D0D18 · radius_lg</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:160px;height:80px;background:rgba(10,10,20,0.85);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.6);">bg_glass_player</div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">#D90A0A14 · radius_lg</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:160px;height:80px;background:rgba(20,20,30,0.5);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.6);">bg_glass_input</div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">#8014141E · radius_md</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:160px;height:80px;background:rgba(13,13,24,0.90);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.6);">bg_glass_dialog</div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">#E60D0D18 · radius_xl</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 焦点状态 -->
+  <div style="margin-bottom:28px;">
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:14px;font-weight:600;">焦点状态 (focus_*.xml)</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:11px;color:var(--text-hint);margin-bottom:6px;">普通态</div>
+        <div style="width:120px;height:44px;background:rgba(13,13,24,0.80);border:1px solid rgba(255,255,255,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(255,255,255,0.4);">focus_glass_default</div>
+      </div>
+      <div style="font-size:18px;color:var(--text-hint);">→</div>
+      <div>
+        <div style="font-size:11px;color:var(--brand-accent);margin-bottom:6px;">聚焦态 (D-pad)</div>
+        <div style="width:120px;height:44px;background:rgba(255,255,255,0.19);border:2px solid white;border-radius:8px;box-shadow:0 0 0 3px rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:700;">focus_glass_default</div>
+      </div>
+      <div style="width:1px;height:60px;background:var(--divider);margin:0 8px;"></div>
+      <div>
+        <div style="font-size:11px;color:var(--text-hint);margin-bottom:6px;">卡片普通态</div>
+        <div style="width:80px;height:120px;background:var(--bg-card);border:2px solid transparent;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:rgba(255,255,255,0.3);">focus_card</div>
+      </div>
+      <div style="font-size:18px;color:var(--text-hint);">→</div>
+      <div>
+        <div style="font-size:11px;color:var(--brand-accent);margin-bottom:6px;">卡片聚焦态</div>
+        <div style="width:80px;height:120px;background:rgba(255,255,255,0.19);border:3px solid white;border-radius:8px;box-shadow:0 0 0 4px rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:700;">focus_card</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 按钮变体 -->
+  <div style="margin-bottom:28px;">
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:14px;font-weight:600;">按钮变体 (btn_*.xml)</div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <button style="padding:10px 20px;background:#E50914;border:none;border-radius:8px;color:white;font-size:13px;font-weight:700;cursor:pointer;">btn_brand_primary<br><span style="font-size:10px;font-weight:400;">Widget.TVBox.PrimaryButton</span></button>
+      <button style="padding:10px 20px;background:rgba(26,26,46,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:8px;color:white;font-size:13px;cursor:pointer;">btn_outlined<br><span style="font-size:10px;color:var(--text-tertiary);">Widget.TVBox.OutlinedButton</span></button>
+      <button style="padding:8px 14px;background:rgba(51,20,30,0.5);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:12px;cursor:pointer;">btn_glass_player<br><span style="font-size:10px;color:var(--text-tertiary);">Widget.TVBox.PlayerButton</span></button>
+      <button style="padding:8px 14px;background:rgba(26,26,46,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:12px;cursor:pointer;">btn_glass_normal<br><span style="font-size:10px;color:var(--text-tertiary);">Widget.TVBox.GlassButton</span></button>
+    </div>
+  </div>
+
+  <!-- 渐变/徽章 -->
+  <div>
+    <div style="font-size:13px;color:var(--text-tertiary);margin-bottom:14px;font-weight:600;">渐变 & 徽章</div>
+    <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="width:120px;height:180px;background:linear-gradient(0deg,rgba(0,0,0,0.90) 0%,transparent 100%);border:1px solid var(--divider);border-radius:8px;"></div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">bg_card_gradient</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:120px;height:180px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.5) 40%,rgba(0,0,0,0.94) 100%);border:1px solid var(--divider);border-radius:8px;"></div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">bg_hero_gradient</div>
+      </div>
+      <div style="text-align:center;margin-bottom:20px;">
+        <div style="display:inline-flex;gap:8px;flex-wrap:wrap;max-width:200px;">
+          <span style="background:rgba(13,13,24,0.8);border-radius:4px;padding:4px 8px;font-size:12px;font-weight:700;">bg_badge_dark</span>
+          <span style="background:#E50914;border-radius:4px;padding:4px 8px;font-size:12px;font-weight:700;color:white;">bg_badge_brand</span>
+          <span style="background:#E50914;border-radius:3px;padding:3px 6px;font-size:10px;font-weight:700;color:white;">HD</span>
+          <span style="background:#E50914;border-radius:3px;padding:3px 6px;font-size:10px;font-weight:700;color:white;">4K</span>
+          <span style="background:rgba(13,13,24,0.8);border-radius:3px;padding:3px 6px;font-size:10px;color:rgba(255,255,255,0.6);">tab_indicator</span>
+        </div>
+        <div style="font-size:10px;color:var(--text-hint);margin-top:6px;">徽章/标签样式</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     § 10  直播 Item 组件展示
+══════════════════════════════════════ -->
+<section class="section" id="items">
+  <div class="section-header">
+    <span class="section-title">直播 Item 组件 <code style="font-size:13px;color:var(--text-tertiary)">item_live_*.xml · epglist_item.xml</code></span>
+    <span class="section-badge">本次新增</span>
+    <span class="section-sub">focus_glass_default 焦点 · mm → dp/sp · 语义颜色</span>
+  </div>
+  <div class="note">
+    ✦ 5 个直播列表条目 + EPG 节目条目 — 全部替换 @drawable/shape_live_focus → focus_glass_default，mm → dp/sp，@android:color/white → text_primary
+  </div>
+
+  <div style="display:flex;gap:32px;flex-wrap:wrap;">
+
+    <!-- 频道分组条目 -->
+    <div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:10px;">item_live_channel_group.xml — 分组标题</div>
+      <div style="width:160px;display:flex;flex-direction:column;gap:3px;">
+        <div style="height:44px;background:rgba(229,9,20,0.15);border:1px solid var(--brand-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--brand-primary);">央视</div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);">卫视</div>
+        <div style="height:44px;background:var(--glass-white-focus);border:1px solid white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:white;font-weight:600;">地方 ← 焦点态</div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);">港澳台</div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);">体育</div>
+      </div>
+    </div>
+
+    <!-- 频道列表条目 -->
+    <div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:10px;">item_live_channel.xml — 序号+频道名</div>
+      <div style="width:220px;display:flex;flex-direction:column;gap:3px;">
+        <div style="height:44px;background:var(--glass-white-focus);border:1px solid white;border-radius:8px;display:flex;align-items:center;padding:0 8px;gap:8px;">
+          <span style="width:40px;font-size:12px;color:var(--text-tertiary);text-align:center;">001</span>
+          <span style="flex:1;font-size:14px;color:white;font-weight:600;">CCTV-1 ← 焦点</span>
+        </div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;padding:0 8px;gap:8px;">
+          <span style="width:40px;font-size:12px;color:var(--text-tertiary);text-align:center;">002</span>
+          <span style="flex:1;font-size:14px;color:var(--text-primary);">CCTV-2 财经</span>
+        </div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;padding:0 8px;gap:8px;">
+          <span style="width:40px;font-size:12px;color:var(--text-tertiary);text-align:center;">003</span>
+          <span style="flex:1;font-size:14px;color:var(--text-primary);">CCTV-4 中文</span>
+        </div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;padding:0 8px;gap:8px;">
+          <span style="width:40px;font-size:12px;color:var(--text-tertiary);text-align:center;">004</span>
+          <span style="flex:1;font-size:14px;color:var(--text-primary);">CCTV-5+ 体育</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 设置条目 -->
+    <div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:10px;">item_live_setting.xml — 设置选项</div>
+      <div style="width:180px;display:flex;flex-direction:column;gap:3px;">
+        <div style="height:44px;background:rgba(229,9,20,0.15);border:1px solid var(--brand-primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--brand-primary);">4K超高清 ✓</div>
+        <div style="height:44px;background:var(--glass-white-focus);border:1px solid white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:white;">1080P ← 焦点</div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);">720P</div>
+        <div style="height:44px;background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text-secondary);">480P</div>
+      </div>
+    </div>
+
+    <!-- EPG 条目 -->
+    <div>
+      <div style="font-size:12px;color:var(--text-tertiary);margin-bottom:10px;">epglist_item.xml — EPG 节目条目</div>
+      <div style="width:360px;display:flex;flex-direction:column;gap:3px;">
+        <div style="background:var(--glass-white-focus);border:1px solid white;border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--brand-accent);">19:00 — 19:30</div>
+            <div style="font-size:14px;color:white;font-weight:600;margin-top:2px;">新闻联播</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+            <div style="padding:3px 8px;background:var(--brand-primary);border-radius:4px;font-size:11px;font-weight:700;color:white;">回看</div>
+            <div style="display:flex;gap:2px;align-items:flex-end;height:16px;">
+              <div style="width:3px;background:var(--brand-accent);border-radius:1px;height:100%;animation:wave1 0.8s infinite alternate;"></div>
+              <div style="width:3px;background:var(--brand-accent);border-radius:1px;height:60%;animation:wave2 0.8s infinite alternate 0.2s;"></div>
+              <div style="width:3px;background:var(--brand-accent);border-radius:1px;height:80%;animation:wave1 0.8s infinite alternate 0.4s;"></div>
+              <div style="width:3px;background:var(--brand-accent);border-radius:1px;height:50%;animation:wave2 0.8s infinite alternate 0.1s;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--text-tertiary);">19:30 — 20:00</div>
+            <div style="font-size:14px;color:var(--text-primary);margin-top:2px;">焦点访谈</div>
+          </div>
+          <div style="padding:3px 8px;background:var(--glass-white);border:1px solid var(--divider);border-radius:4px;font-size:11px;color:var(--text-tertiary);">回看</div>
+        </div>
+        <div style="background:var(--glass-white);border:1px solid var(--divider);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:8px;">
+          <div style="flex:1;">
+            <div style="font-size:12px;color:var(--text-tertiary);">20:00 — 20:30</div>
+            <div style="font-size:14px;color:var(--text-primary);margin-top:2px;">新闻30分</div>
+          </div>
+          <div style="padding:3px 8px;background:var(--glass-white);border:1px solid var(--divider);border-radius:4px;font-size:11px;color:var(--text-tertiary);">回看</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+  @keyframes wave1 { from{height:40%} to{height:100%} }
+  @keyframes wave2 { from{height:80%} to{height:30%} }
+  </style>
+</section>
+
+<!-- ══════════════════════════════════════
+     § 11  全局完成度报告
+══════════════════════════════════════ -->
+<section class="section" id="report">
+  <div class="section-header">
+    <span class="section-title">全局完成度报告</span>
+    <span class="section-badge" style="background:var(--brand-accent);">完工</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;">
+
+    <!-- 布局文件 -->
+    <div style="background:var(--bg-surface);border:1px solid var(--divider);border-radius:var(--radius-xl);padding:20px;">
+      <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:14px;">📐 布局文件 (layout/)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">activity_home.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">activity_detail.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">activity_search.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">activity_live_play.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">activity_fast_search.xml</span><span style="color:#00C853;">✅ 单位清理</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">fragment_user.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_grid.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_live.xml</span><span style="color:#00C853;">✅ 单位+焦点</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_live_channel.xml</span><span style="color:#00C853;">✅ 单位+焦点</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_live_channel_group.xml</span><span style="color:#00C853;">✅ 单位+焦点</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_live_setting.xml</span><span style="color:#00C853;">✅ 单位+焦点</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">item_live_setting_group.xml</span><span style="color:#00C853;">✅ 单位+焦点</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">epglist_item.xml</span><span style="color:#00C853;">✅ 单位清理</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">player_vod_control_view.xml</span><span style="color:#00C853;">✅ 重构</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">box_vod_control_view.xml</span><span style="color:#00C853;">✅ 单位+玻璃</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">dialog_live_password.xml</span><span style="color:#00C853;">✅ 单位清理</span></div>
+        <div style="border-top:1px solid var(--divider);padding-top:8px;display:flex;justify-content:space-between;font-weight:700;">
+          <span style="color:var(--brand-accent);">全项目 px/mm 单位</span>
+          <span style="color:#00C853;">🎉 零残留</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 资源文件 -->
+    <div style="background:var(--bg-surface);border:1px solid var(--divider);border-radius:var(--radius-xl);padding:20px;">
+      <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:14px;">🎨 资源文件 (values/ + drawable/)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">dimens.xml</span><span style="color:#00C853;">✅ 93项 mm→dp/sp + 语义命名</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">colors.xml</span><span style="color:#00C853;">✅ 语义体系 + 旧名兼容</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">styles.xml</span><span style="color:#00C853;">✅ 6 Widget 样式 + TextAppearance</span></div>
+        <div style="margin-top:6px;font-size:12px;color:var(--text-tertiary);font-weight:600;">新增 Drawable（16个）</div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">bg_glass_panel/sidebar/player</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">bg_glass_input/dialog</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">bg_card_gradient/hero_gradient</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">focus_glass_default/focus_card</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">btn_brand_primary/outlined</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">btn_glass_player/normal</span><span style="color:#00C853;">✅</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-secondary);">tab_indicator/bg_badge_dark/brand</span><span style="color:#00C853;">✅</span></div>
+        <div style="border-top:1px solid var(--divider);padding-top:8px;display:flex;justify-content:space-between;font-weight:700;">
+          <span style="color:var(--brand-accent);">Java 层改动</span>
+          <span style="color:#00C853;">🎉 零修改</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 提交记录 -->
+  <div style="background:var(--bg-surface);border:1px solid var(--divider);border-radius:var(--radius-xl);padding:20px;">
+    <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:14px;">📦 Git 提交记录（本次改造）</div>
+    <div style="display:flex;flex-direction:column;gap:8px;font-family:monospace;font-size:12px;">
+      <div style="display:flex;gap:12px;align-items:center;">
+        <code style="color:var(--brand-accent);width:70px;flex-shrink:0;">ea7adb1</code>
+        <span style="color:var(--text-secondary);">refactor(layout): 批量清理 9 个布局文件的 px/mm 单位 + 毛玻璃统一</span>
+        <span style="margin-left:auto;color:var(--text-tertiary);white-space:nowrap;">9 files</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <code style="color:var(--brand-accent);width:70px;flex-shrink:0;">5a68fac</code>
+        <span style="color:var(--text-secondary);">feat(ui): Netflix×Material+Glassmorphism 全面重构 — 9布局+16 Drawable+3资源文件</span>
+        <span style="margin-left:auto;color:var(--text-tertiary);white-space:nowrap;">25 files</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <code style="color:var(--brand-accent);width:70px;flex-shrink:0;">3429ea9</code>
+        <span style="color:var(--text-secondary);">refactor(live): 重构 activity_live_play.xml — 毛玻璃+单位规范化+ConstraintLayout</span>
+        <span style="margin-left:auto;color:var(--text-tertiary);white-space:nowrap;">1 file</span>
+      </div>
+      <div style="border-top:1px solid var(--divider);padding-top:8px;display:flex;gap:12px;font-weight:700;">
+        <span style="color:var(--brand-accent);">总计</span>
+        <span style="color:var(--text-primary);">3 commits · 35 files changed · 2,811 insertions · 1,956 deletions</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ 底部说明 ══ -->
+<div style="padding:40px 48px;text-align:center;border-top:1px solid var(--divider);">
+  <div style="font-size:13px;color:var(--text-tertiary);line-height:2;">
+    📺 <strong style="color:var(--text-secondary);">TVBox Android TV</strong> — Netflix × Material Design + Glassmorphism 主题预览<br>
+    设计基准 <strong style="color:var(--brand-accent);">1280×720dp</strong> · 横屏固定 · Java 层零修改（所有原始 ID 完整保留）<br>
+    毛玻璃效果在 Android 实机上通过 <code style="color:var(--brand-primary);">backdrop-filter: blur()</code> 对应的
+    <code style="color:var(--brand-primary);">RenderScript / BlurEffect (API 31+)</code> 实现真实模糊<br>
+    <span style="color:var(--text-hint);font-size:11px;">此 HTML 预览仅作视觉方案参考，非真实渲染结果</span>
+  </div>
+</div>
+
+</body>
+</html>

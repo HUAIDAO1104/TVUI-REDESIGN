@@ -29,6 +29,7 @@
                     android:layout_height="@dimen/vs_50"
                     android:layout_marginBottom="@dimen/vs_10"
                     android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                     android:focusable="true"
 
                     android:gravity="center_vertical"
@@ -62,8 +63,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/vs_10"
                         android:layout_marginLeft="@dimen/vs_10"
-                        android:text=">"
-                        android:textColor="@android:color/white"
+                        android:text="›"
+                        android:textColor="@color/text_tertiary"
                         android:textSize="@dimen/ts_30" />
             </LinearLayout>
 
@@ -81,6 +82,7 @@
                     android:layout_marginRight="@dimen/vs_5"
                     android:layout_weight="3.08"
                     android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -113,8 +115,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
                 <LinearLayout
@@ -125,6 +127,7 @@
                     android:layout_marginLeft="@dimen/vs_5"
                     android:layout_weight="1"
                     android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -155,8 +158,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/vs_10"
                         android:layout_marginLeft="@dimen/vs_10"
-                        android:text=">"
-                        android:textColor="@android:color/white"
+                        android:text="›"
+                        android:textColor="@color/text_tertiary"
                         android:textSize="@dimen/ts_30" />
                 </LinearLayout>
             </LinearLayout>
@@ -175,6 +178,7 @@
                     android:layout_marginRight="@dimen/vs_5"
                     android:layout_weight="3.08"
                     android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -207,8 +211,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
                 <LinearLayout
@@ -219,6 +223,7 @@
                     android:layout_marginLeft="@dimen/vs_5"
                     android:layout_weight="1"
                     android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -250,8 +255,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/vs_10"
                         android:layout_marginLeft="@dimen/vs_10"
-                        android:text=">"
-                        android:textColor="@android:color/white"
+                        android:text="›"
+                        android:textColor="@color/text_tertiary"
                         android:textSize="@dimen/ts_30" />
                 </LinearLayout>
             </LinearLayout>
@@ -280,6 +285,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -310,8 +316,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -323,6 +329,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -353,8 +360,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -377,6 +384,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -407,8 +415,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -420,6 +428,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -450,8 +459,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -472,6 +481,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -502,8 +512,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
 
@@ -524,6 +534,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -554,8 +565,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -567,6 +578,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -597,8 +609,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -620,6 +632,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -650,8 +663,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
 
@@ -663,6 +676,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -693,8 +707,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
 
@@ -716,6 +730,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -747,8 +762,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                 </LinearLayout>
 
@@ -770,6 +785,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -800,8 +816,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                     <LinearLayout
@@ -812,6 +828,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -842,8 +859,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -875,6 +892,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -898,8 +916,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -911,6 +929,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -934,8 +953,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -957,6 +976,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -987,8 +1007,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -1000,6 +1020,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -1030,8 +1051,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -1064,6 +1085,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -1095,8 +1117,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -1109,6 +1131,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -1132,8 +1155,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>
@@ -1157,6 +1180,7 @@
                         android:layout_marginRight="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -1180,8 +1204,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
 
@@ -1193,6 +1217,7 @@
                         android:layout_marginLeft="@dimen/vs_5"
                         android:layout_weight="1"
                         android:background="@drawable/shape_setting_model_focus"
+                    android:stateListAnimator="@animator/focus_scale_subtle"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -1216,8 +1241,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/vs_10"
                             android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
+                            android:text="›"
+                            android:textColor="@color/text_tertiary"
                             android:textSize="@dimen/ts_30" />
                     </LinearLayout>
                 </LinearLayout>

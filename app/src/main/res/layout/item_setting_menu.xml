@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 设置左侧菜单项 — 毛玻璃胶囊 + 焦点缩放 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/vs_10"
+    android:layout_marginBottom="@dimen/spacing_8"
     android:background="@drawable/shape_setting_sort_focus"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:stateListAnimator="@animator/focus_scale_subtle">
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="@dimen/vs_5"
+        android:paddingLeft="@dimen/spacing_16"
+        android:paddingTop="@dimen/spacing_10"
+        android:paddingRight="@dimen/spacing_16"
+        android:paddingBottom="@dimen/spacing_10"
         android:singleLine="true"
-        android:textColor="@color/color_CCFFFFFF"
-        android:textSize="@dimen/ts_24" />
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/text_md" />
 </FrameLayout>
